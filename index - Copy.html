@@ -1,0 +1,655 @@
+
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>My Tracks</title>
+        <style>
+            /* Reset & Basis */
+            body { margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; 
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+                    background-color: #fff; color: #333; }
+            
+            /* Karte: 70% */
+            #map-container { height: 70vh; width: 100%; border-bottom: 1px solid #e0e0e0; }
+            iframe { width: 100%; height: 100%; border: none; }
+            
+            /* Liste: 30% - Sehr Clean */
+            #list-container { height: 30vh; overflow-y: auto; padding: 0; background-color: #fff; }
+            
+            table { width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; }
+            
+            /* Header fixiert, kaum sichtbar */
+            th { 
+                text-align: left; padding: 10px 20px; 
+                color: #999; font-weight: 500; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+                border-bottom: 1px solid #f0f0f0; 
+                position: sticky; top: 0; background-color: #fff; z-index: 10;
+            }
+            
+            /* Zeilen: Minimalistisch */
+            td { padding: 8px 20px; border-bottom: 1px solid #f8f8f8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            tr:hover td { background-color: #f5f5f5; cursor: pointer; color: #000; }
+            
+            /* Spalten */
+            .col-name { width: 65%; color: #333; }
+            .col-km { width: 15%; text-align: right; color: #888; font-variant-numeric: tabular-nums; }
+            .col-date { width: 20%; text-align: right; color: #aaa; font-variant-numeric: tabular-nums; }
+            
+            /* Scrollbar fast unsichtbar */
+            ::-webkit-scrollbar { width: 6px; }
+            ::-webkit-scrollbar-thumb { background: #eee; border-radius: 3px; }
+            ::-webkit-scrollbar-thumb:hover { background: #ddd; }
+        </style>
+    </head>
+    <body>
+        <div id="map-container"><iframe src="map_part.html"></iframe></div>
+        <div id="list-container">
+            <table>
+                <thead><tr><th class="col-name">Name</th><th class="col-km" style="text-align:right">Distanz</th><th class="col-date" style="text-align:right">Datum</th></tr></thead>
+                <tbody>
+        <tr>
+            <td class="col-name" title="Am Rhein zum Stotz Tag1 (Completed)">Am Rhein zum Stotz Tag1 (Completed)</td>
+            <td class="col-km">118.19 km</td>
+            <td class="col-date">01.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Am Rhein nach Hause Tag2 (Completed)">Am Rhein nach Hause Tag2 (Completed)</td>
+            <td class="col-km">116.77 km</td>
+            <td class="col-date">01.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Alexa - navigiere mich zur Lahn (Completed)">Alexa - navigiere mich zur Lahn (Completed)</td>
+            <td class="col-km">111.38 km</td>
+            <td class="col-date">03.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Ach ja? Wo liegt nochmal Schnee. (Completed)">Ach ja? Wo liegt nochmal Schnee. (Completed)</td>
+            <td class="col-km">209.03 km</td>
+            <td class="col-date">03.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="APARTHOTEL AM HAHNWALD (Completed)">APARTHOTEL AM HAHNWALD (Completed)</td>
+            <td class="col-km">54.36 km</td>
+            <td class="col-date">05.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="A Journey around the Taunus - Overnight I (Completed)">A Journey around the Taunus - Overnight I (Completed)</td>
+            <td class="col-km">170.73 km</td>
+            <td class="col-date">05.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="A Journey around the Taunus - Overnight II (Completed)">A Journey around the Taunus - Overnight II (Completed)</td>
+            <td class="col-km">117.25 km</td>
+            <td class="col-date">05.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Am See 🤦‍♂️- Bikepacking ⏱️3.1 (Completed)">Am See 🤦‍♂️- Bikepacking ⏱️3.1 (Completed)</td>
+            <td class="col-km">19.5 km</td>
+            <td class="col-date">07.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Arlbergpass & alte Reschenstraẞe - Bikepacking ⏱️4 (Completed)">Arlbergpass & alte Reschenstraẞe - Bikepacking ⏱️4 (Completed)</td>
+            <td class="col-km">156.87 km</td>
+            <td class="col-date">07.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Albrecht-Route Mixed Terrain - Bikepacking ⏱️6 (Completed)">Albrecht-Route Mixed Terrain - Bikepacking ⏱️6 (Completed)</td>
+            <td class="col-km">31.08 km</td>
+            <td class="col-date">07.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Abenderunde Autobahn (Completed)">Abenderunde Autobahn (Completed)</td>
+            <td class="col-km">26.07 km</td>
+            <td class="col-date">08.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Abenderunde Autobahn (Completed)">Abenderunde Autobahn (Completed)</td>
+            <td class="col-km">24.93 km</td>
+            <td class="col-date">08.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Anreise zum Orbit (Completed)">Anreise zum Orbit (Completed)</td>
+            <td class="col-km">9.27 km</td>
+            <td class="col-date">08.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Again on Tarmac (Completed)">Again on Tarmac (Completed)</td>
+            <td class="col-km">69.89 km</td>
+            <td class="col-date">08.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Alte Schuhe weg bringen. (Completed)">Alte Schuhe weg bringen. (Completed)</td>
+            <td class="col-km">25.71 km</td>
+            <td class="col-date">09.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Advent[ure] Kalender #3 Bikeloft (Completed)">Advent[ure] Kalender #3 Bikeloft (Completed)</td>
+            <td class="col-km">8.69 km</td>
+            <td class="col-date">12.2020</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Aerobar Express (Completed)">Aerobar Express (Completed)</td>
+            <td class="col-km">86.77 km</td>
+            <td class="col-date">03.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Angriff auf den ersten 16er. (Completed)">Angriff auf den ersten 16er. (Completed)</td>
+            <td class="col-km">225.03 km</td>
+            <td class="col-date">05.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Altitude. (Completed)">Altitude. (Completed)</td>
+            <td class="col-km">57.82 km</td>
+            <td class="col-date">08.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="ARC8 (Completed)">ARC8 (Completed)</td>
+            <td class="col-km">23.55 km</td>
+            <td class="col-date">09.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="After Work featuring @Bike-Loft.de (Completed)">After Work featuring @Bike-Loft.de (Completed)</td>
+            <td class="col-km">52.99 km</td>
+            <td class="col-date">09.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Adventurekalender No1 (Completed)">Adventurekalender No1 (Completed)</td>
+            <td class="col-km">40.35 km</td>
+            <td class="col-date">11.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Adventurekalender No1 (Completed)">Adventurekalender No1 (Completed)</td>
+            <td class="col-km">40.1 km</td>
+            <td class="col-date">11.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">44.62 km</td>
+            <td class="col-date">11.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Adventurekalender No2 (Completed)">Adventurekalender No2 (Completed)</td>
+            <td class="col-km">17.51 km</td>
+            <td class="col-date">12.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Adventurekalender Special by Taunus MTB Guide (Completed)">Adventurekalender Special by Taunus MTB Guide (Completed)</td>
+            <td class="col-km">92.93 km</td>
+            <td class="col-date">12.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">52.54 km</td>
+            <td class="col-date">12.2021</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Altes Trikot anschauen. (Completed)">Altes Trikot anschauen. (Completed)</td>
+            <td class="col-km">132.45 km</td>
+            <td class="col-date">02.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">21.65 km</td>
+            <td class="col-date">03.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">73.1 km</td>
+            <td class="col-date">04.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">31.51 km</td>
+            <td class="col-date">04.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">25.21 km</td>
+            <td class="col-date">05.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">41.02 km</td>
+            <td class="col-date">05.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">5.22 km</td>
+            <td class="col-date">05.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">84.08 km</td>
+            <td class="col-date">07.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">82.48 km</td>
+            <td class="col-date">08.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="AM SCHIESSPLATZ. (Completed)">AM SCHIESSPLATZ. (Completed)</td>
+            <td class="col-km">226.32 km</td>
+            <td class="col-date">08.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">13.58 km</td>
+            <td class="col-date">09.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">43.35 km</td>
+            <td class="col-date">10.2022</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">53.91 km</td>
+            <td class="col-date">02.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">49.33 km</td>
+            <td class="col-date">03.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="almost fully packed, t-minus 16. (Completed)">almost fully packed, t-minus 16. (Completed)</td>
+            <td class="col-km">74.28 km</td>
+            <td class="col-date">05.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Alpenbundesstraße👎 (Completed)">Alpenbundesstraße👎 (Completed)</td>
+            <td class="col-km">338.16 km</td>
+            <td class="col-date">07.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="alone. (Completed)">alone. (Completed)</td>
+            <td class="col-km">297.32 km</td>
+            <td class="col-date">07.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="alone two. (Completed)">alone two. (Completed)</td>
+            <td class="col-km">295.06 km</td>
+            <td class="col-date">07.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Against the trend. [ Col de Portet-d'Aspet  ⛰️⛰️⛰️ ] (Completed)">Against the trend. [ Col de Portet-d'Aspet  ⛰️⛰️⛰️ ] (Completed)</td>
+            <td class="col-km">223.9 km</td>
+            <td class="col-date">07.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">52.06 km</td>
+            <td class="col-date">07.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="ˈaltəˌt(y)o͞od ˈɹitʃt 2023. (Completed)">ˈaltəˌt(y)o͞od ˈɹitʃt 2023. (Completed)</td>
+            <td class="col-km">45.39 km</td>
+            <td class="col-date">08.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">47.71 km</td>
+            <td class="col-date">09.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">13.08 km</td>
+            <td class="col-date">10.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">51.67 km</td>
+            <td class="col-date">12.2023</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">81.63 km</td>
+            <td class="col-date">03.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">72.32 km</td>
+            <td class="col-date">03.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">56.79 km</td>
+            <td class="col-date">03.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">46.91 km</td>
+            <td class="col-date">03.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">86.47 km</td>
+            <td class="col-date">04.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">109.8 km</td>
+            <td class="col-date">04.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">33.82 km</td>
+            <td class="col-date">04.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">43.84 km</td>
+            <td class="col-date">05.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">42.1 km</td>
+            <td class="col-date">05.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">43.69 km</td>
+            <td class="col-date">05.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">17.06 km</td>
+            <td class="col-date">05.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">45.08 km</td>
+            <td class="col-date">06.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">82.09 km</td>
+            <td class="col-date">07.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">181.01 km</td>
+            <td class="col-date">07.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">3.49 km</td>
+            <td class="col-date">08.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">55.6 km</td>
+            <td class="col-date">08.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">32.92 km</td>
+            <td class="col-date">08.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">87.19 km</td>
+            <td class="col-date">08.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">24.84 km</td>
+            <td class="col-date">09.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">29.96 km</td>
+            <td class="col-date">10.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">46.31 km</td>
+            <td class="col-date">10.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">28.15 km</td>
+            <td class="col-date">10.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">56.35 km</td>
+            <td class="col-date">11.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">24.87 km</td>
+            <td class="col-date">11.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">87.54 km</td>
+            <td class="col-date">12.2024</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">53.66 km</td>
+            <td class="col-date">03.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">50.12 km</td>
+            <td class="col-date">03.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">32.82 km</td>
+            <td class="col-date">03.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">51.4 km</td>
+            <td class="col-date">04.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">29.49 km</td>
+            <td class="col-date">04.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">44.37 km</td>
+            <td class="col-date">04.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">41.62 km</td>
+            <td class="col-date">04.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">114.09 km</td>
+            <td class="col-date">04.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">95.75 km</td>
+            <td class="col-date">05.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">40.18 km</td>
+            <td class="col-date">05.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">57.82 km</td>
+            <td class="col-date">05.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">76.27 km</td>
+            <td class="col-date">07.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">46.17 km</td>
+            <td class="col-date">08.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">71.99 km</td>
+            <td class="col-date">08.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">72.72 km</td>
+            <td class="col-date">08.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">114.67 km</td>
+            <td class="col-date">09.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">40.36 km</td>
+            <td class="col-date">09.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">106.47 km</td>
+            <td class="col-date">10.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">31.68 km</td>
+            <td class="col-date">10.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">42.8 km</td>
+            <td class="col-date">10.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">47.83 km</td>
+            <td class="col-date">10.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">2.12 km</td>
+            <td class="col-date">11.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">48.25 km</td>
+            <td class="col-date">11.2025</td>
+        </tr>
+        
+        <tr>
+            <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+            <td class="col-km">21.55 km</td>
+            <td class="col-date">11.2025</td>
+        </tr>
+        </tbody>
+            </table>
+        </div>
+    </body>
+    </html>
+    
