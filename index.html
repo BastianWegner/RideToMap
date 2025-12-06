@@ -35,7 +35,6 @@
             #map-blur-overlay {
                 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
                 
-                /* WICHTIG: Damit wir den ersten Klick fangen können */
                 pointer-events: auto; 
                 cursor: pointer;
                 z-index: 400; 
@@ -52,7 +51,14 @@
             
             #map-blur-overlay.hidden {
                 opacity: 0;
-                pointer-events: none !important; /* Nach Ausblenden Klicks durchlassen */
+                pointer-events: none !important;
+            }
+
+            /* NEU: NEON GLOW / WEICHZEICHNER FÜR DIE LINIEN */
+            .leaflet-overlay-pane svg path {
+                /* Ein kleiner Blur-Wert macht die Kanten weich und lässt die Linien "ausfransen" */
+                filter: blur(1px);
+                mix-blend-mode: screen; 
             }
 
             /* Steuerleiste */
@@ -464,7 +470,7 @@
             
             <tr>
                 <td class="col-name" title="Schnelle Runde zum Feierabend (Completed)">Schnelle Runde zum Feierabend (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">44.28 km</td>
                 <td class="col-date">07.2020</td>
             </tr>
@@ -604,7 +610,7 @@
             
             <tr>
                 <td class="col-name" title="Bastian Wegner - Orbit360 RlP - 12:12 (Completed)">Bastian Wegner - Orbit360 RlP - 12:12 (Completed)</td>
-                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">225.21 km</td>
                 <td class="col-date">08.2020</td>
             </tr>
@@ -926,7 +932,7 @@
             
             <tr>
                 <td class="col-name" title="Eins, zwei, drei, vier Eckstein, alles muss versteckt sein. #Bike-Loft Adventurekalender °4 (Completed)">Eins, zwei, drei, vier Eckstein, alles muss versteckt sein. #Bike-Loft Adventurekalender °4 (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">37.13 km</td>
                 <td class="col-date">12.2020</td>
             </tr>
@@ -947,7 +953,7 @@
             
             <tr>
                 <td class="col-name" title="Fünfhundertsechzehn #Festive500 (Completed)">Fünfhundertsechzehn #Festive500 (Completed)</td>
-                <td class="col-region" title="Berlin, Brandenburg, Hessen, Sachsen-Anhalt, Thüringen">Berlin, Brandenburg, Hessen, Sachsen-Anhalt, Thüringen</td>
+                <td class="col-region" title="Brandenburg, Hessen, Sachsen-Anhalt, Thüringen">Brandenburg, Hessen, Sachsen-Anhalt, Thüringen</td>
                 <td class="col-km">516.01 km</td>
                 <td class="col-date">12.2020</td>
             </tr>
@@ -996,7 +1002,7 @@
             
             <tr>
                 <td class="col-name" title="Router einrichten (Completed)">Router einrichten (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">25.12 km</td>
                 <td class="col-date">01.2021</td>
             </tr>
@@ -1031,7 +1037,7 @@
             
             <tr>
                 <td class="col-name" title="Hochwasserumleitung (Completed)">Hochwasserumleitung (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">62.27 km</td>
                 <td class="col-date">02.2021</td>
             </tr>
@@ -1220,7 +1226,7 @@
             
             <tr>
                 <td class="col-name" title="Modeselektor (Completed)">Modeselektor (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">43.49 km</td>
                 <td class="col-date">04.2021</td>
             </tr>
@@ -1465,14 +1471,14 @@
             
             <tr>
                 <td class="col-name" title="Eberbacher Str. (Completed)">Eberbacher Str. (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">38.11 km</td>
                 <td class="col-date">07.2021</td>
             </tr>
             
             <tr>
                 <td class="col-name" title="Bike-Loft Samstagstour (Completed)">Bike-Loft Samstagstour (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">48.47 km</td>
                 <td class="col-date">07.2021</td>
             </tr>
@@ -1738,7 +1744,7 @@
             
             <tr>
                 <td class="col-name" title="Cycling (Completed)">Cycling (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">35.72 km</td>
                 <td class="col-date">10.2021</td>
             </tr>
@@ -2116,7 +2122,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">29.03 km</td>
                 <td class="col-date">04.2022</td>
             </tr>
@@ -2298,7 +2304,7 @@
             
             <tr>
                 <td class="col-name" title="Begleitfahrt HH-BE-HH 2022 (Completed)">Begleitfahrt HH-BE-HH 2022 (Completed)</td>
-                <td class="col-region" title="Berlin, Brandenburg">Berlin, Brandenburg</td>
+                <td class="col-region" title="Berlin">Berlin</td>
                 <td class="col-km">50.96 km</td>
                 <td class="col-date">06.2022</td>
             </tr>
@@ -2354,7 +2360,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">49.35 km</td>
                 <td class="col-date">07.2022</td>
             </tr>
@@ -2501,7 +2507,7 @@
             
             <tr>
                 <td class="col-name" title="#GoingDutch - A bridge too far... (Completed)">#GoingDutch - A bridge too far... (Completed)</td>
-                <td class="col-region" title="Belgien, Niederlande">Belgien, Niederlande</td>
+                <td class="col-region" title="Niederlande">Niederlande</td>
                 <td class="col-km">146.23 km</td>
                 <td class="col-date">08.2022</td>
             </tr>
@@ -3215,7 +3221,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">38.33 km</td>
                 <td class="col-date">08.2023</td>
             </tr>
@@ -3299,7 +3305,7 @@
             
             <tr>
                 <td class="col-name" title="langgestreckt auf einem Berggrat _ 1. (Completed)">langgestreckt auf einem Berggrat _ 1. (Completed)</td>
-                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
+                <td class="col-region" title="Frankreich, Rheinland-Pfalz">Frankreich, Rheinland-Pfalz</td>
                 <td class="col-km">86.17 km</td>
                 <td class="col-date">10.2023</td>
             </tr>
@@ -3320,14 +3326,14 @@
             
             <tr>
                 <td class="col-name" title="Cycling (Completed)">Cycling (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">41.64 km</td>
                 <td class="col-date">10.2023</td>
             </tr>
             
             <tr>
                 <td class="col-name" title="Cycling (Completed)">Cycling (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">58.53 km</td>
                 <td class="col-date">10.2023</td>
             </tr>
@@ -3348,7 +3354,7 @@
             
             <tr>
                 <td class="col-name" title="Cycling (Completed)">Cycling (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">45.88 km</td>
                 <td class="col-date">10.2023</td>
             </tr>
@@ -3369,7 +3375,7 @@
             
             <tr>
                 <td class="col-name" title="HighFIVE (1) of (2) (Completed)">HighFIVE (1) of (2) (Completed)</td>
-                <td class="col-region" title="Frankreich, Luxemburg, Rheinland-Pfalz, Saarland">Frankreich, Luxemburg, Rheinland-Pfalz, Saarland</td>
+                <td class="col-region" title="Belgien, Frankreich, Luxemburg, Rheinland-Pfalz, Saarland">Belgien, Frankreich, Luxemburg, Rheinland-Pfalz, Saarland</td>
                 <td class="col-km">224.01 km</td>
                 <td class="col-date">11.2023</td>
             </tr>
@@ -3453,7 +3459,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">61.03 km</td>
                 <td class="col-date">01.2024</td>
             </tr>
@@ -3747,7 +3753,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">59.4 km</td>
                 <td class="col-date">05.2024</td>
             </tr>
@@ -3901,7 +3907,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">52.36 km</td>
                 <td class="col-date">07.2024</td>
             </tr>
@@ -3992,7 +3998,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">36.6 km</td>
                 <td class="col-date">07.2024</td>
             </tr>
@@ -4132,7 +4138,7 @@
             
             <tr>
                 <td class="col-name" title="FR: Septembre un 🍇🚜🌽🌻🌤🍎🍁 (Completed)">FR: Septembre un 🍇🚜🌽🌻🌤🍎🍁 (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Frankreich, Hessen, Rheinland-Pfalz">Frankreich, Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">166.04 km</td>
                 <td class="col-date">09.2024</td>
             </tr>
@@ -4146,7 +4152,7 @@
             
             <tr>
                 <td class="col-name" title="FR: Septembre trois 🍇🚜🌽🌻🌤🍎🍁 (Completed)">FR: Septembre trois 🍇🚜🌽🌻🌤🍎🍁 (Completed)</td>
-                <td class="col-region" title="Frankreich, Rheinland-Pfalz">Frankreich, Rheinland-Pfalz</td>
+                <td class="col-region" title="Frankreich">Frankreich</td>
                 <td class="col-km">148.71 km</td>
                 <td class="col-date">09.2024</td>
             </tr>
@@ -4195,7 +4201,7 @@
             
             <tr>
                 <td class="col-name" title="WASSERKUPPE. (Completed)">WASSERKUPPE. (Completed)</td>
-                <td class="col-region" title="Bayern, Hessen">Bayern, Hessen</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">195.26 km</td>
                 <td class="col-date">10.2024</td>
             </tr>
@@ -4258,7 +4264,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">28.01 km</td>
                 <td class="col-date">12.2024</td>
             </tr>
@@ -4335,7 +4341,7 @@
             
             <tr>
                 <td class="col-name" title="Ri Sü n Fr un hoc (Completed)">Ri Sü n Fr un hoc (Completed)</td>
-                <td class="col-region" title="Frankreich, Rheinland-Pfalz">Frankreich, Rheinland-Pfalz</td>
+                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
                 <td class="col-km">96.82 km</td>
                 <td class="col-date">03.2025</td>
             </tr>
@@ -4426,7 +4432,7 @@
             
             <tr>
                 <td class="col-name" title="16 PEAKS No. 12 - Brandenburg. [čtyři] (Completed)">16 PEAKS No. 12 - Brandenburg. [čtyři] (Completed)</td>
-                <td class="col-region" title="Sachsen">Sachsen</td>
+                <td class="col-region" title="Brandenburg, Sachsen">Brandenburg, Sachsen</td>
                 <td class="col-km">96.51 km</td>
                 <td class="col-date">04.2025</td>
             </tr>
@@ -4916,7 +4922,7 @@
             
             <tr>
                 <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">114.67 km</td>
                 <td class="col-date">09.2025</td>
             </tr>
@@ -4965,7 +4971,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Bayern, Hessen">Bayern, Hessen</td>
                 <td class="col-km">208.5 km</td>
                 <td class="col-date">10.2025</td>
             </tr>
@@ -5070,7 +5076,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
                 <td class="col-km">130.45 km</td>
                 <td class="col-date">11.2025</td>
             </tr>
@@ -5091,8 +5097,8 @@
             // ECharts Init
             var chartDom = document.getElementById('graph-view');
             var myChart = echarts.init(chartDom);
-            var nodes = [{"id": "Hessen", "name": "Hessen", "symbolSize": 75.0, "value": 534, "category": 0}, {"id": "Spanien", "name": "Spanien", "symbolSize": 17.247191011235955, "value": 20, "category": 0}, {"id": "Niederlande", "name": "Niederlande", "symbolSize": 15.786516853932584, "value": 7, "category": 0}, {"id": "Belgien", "name": "Belgien", "symbolSize": 15.224719101123595, "value": 2, "category": 0}, {"id": "Frankreich", "name": "Frankreich", "symbolSize": 20.842696629213485, "value": 52, "category": 0}, {"id": "Rheinland-Pfalz", "name": "Rheinland-Pfalz", "symbolSize": 47.69662921348315, "value": 291, "category": 0}, {"id": "Baden-Wuerttemberg", "name": "Baden-Wuerttemberg", "symbolSize": 17.134831460674157, "value": 19, "category": 0}, {"id": "Berlin", "name": "Berlin", "symbolSize": 17.02247191011236, "value": 18, "category": 0}, {"id": "Brandenburg", "name": "Brandenburg", "symbolSize": 15.898876404494382, "value": 8, "category": 0}, {"id": "Sachsen", "name": "Sachsen", "symbolSize": 15.898876404494382, "value": 8, "category": 0}, {"id": "Tschechien", "name": "Tschechien", "symbolSize": 16.01123595505618, "value": 9, "category": 0}, {"id": "NRW", "name": "NRW", "symbolSize": 16.46067415730337, "value": 13, "category": 0}, {"id": "Niedersachsen", "name": "Niedersachsen", "symbolSize": 15.786516853932584, "value": 7, "category": 0}, {"id": "Bayern", "name": "Bayern", "symbolSize": 17.471910112359552, "value": 22, "category": 0}, {"id": "Italien", "name": "Italien", "symbolSize": 16.123595505617978, "value": 10, "category": 0}, {"id": "Schweiz", "name": "Schweiz", "symbolSize": 15.337078651685394, "value": 3, "category": 0}, {"id": "\u00d6sterreich", "name": "\u00d6sterreich", "symbolSize": 16.348314606741575, "value": 12, "category": 0}, {"id": "Th\u00fcringen", "name": "Th\u00fcringen", "symbolSize": 16.685393258426966, "value": 15, "category": 0}, {"id": "Sachsen-Anhalt", "name": "Sachsen-Anhalt", "symbolSize": 15.561797752808989, "value": 5, "category": 0}, {"id": "Hamburg", "name": "Hamburg", "symbolSize": 15.44943820224719, "value": 4, "category": 0}, {"id": "Luxemburg", "name": "Luxemburg", "symbolSize": 15.112359550561798, "value": 1, "category": 0}, {"id": "Saarland", "name": "Saarland", "symbolSize": 15.44943820224719, "value": 4, "category": 0}, {"id": "Andorra", "name": "Andorra", "symbolSize": 15.112359550561798, "value": 1, "category": 0}, {"id": "MeckPomm", "name": "MeckPomm", "symbolSize": 15.224719101123595, "value": 2, "category": 0}, {"id": "Schleswig-Holstein", "name": "Schleswig-Holstein", "symbolSize": 15.224719101123595, "value": 2, "category": 0}, {"id": "Polen", "name": "Polen", "symbolSize": 15.337078651685394, "value": 3, "category": 0}];
-            var links = [{"source": "Belgien", "target": "Niederlande", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Frankreich", "target": "Rheinland-Pfalz", "value": 17, "lineStyle": {"width": 5.6}}, {"source": "Baden-Wuerttemberg", "target": "Frankreich", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Baden-Wuerttemberg", "target": "Rheinland-Pfalz", "value": 10, "lineStyle": {"width": 3.5}}, {"source": "Hessen", "target": "Rheinland-Pfalz", "value": 241, "lineStyle": {"width": 72.8}}, {"source": "Berlin", "target": "Brandenburg", "value": 7, "lineStyle": {"width": 2.6}}, {"source": "Sachsen", "target": "Tschechien", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Hessen", "target": "NRW", "value": 5, "lineStyle": {"width": 2.0}}, {"source": "NRW", "target": "Rheinland-Pfalz", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Hessen", "target": "Niedersachsen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Frankreich", "target": "Spanien", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Frankreich", "target": "Schweiz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Italien", "target": "\u00d6sterreich", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Hessen", "target": "Th\u00fcringen", "value": 12, "lineStyle": {"width": 4.1}}, {"source": "Bayern", "target": "\u00d6sterreich", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Hessen", "value": 8, "lineStyle": {"width": 2.9}}, {"source": "Frankreich", "target": "Hessen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Niedersachsen", "target": "Th\u00fcringen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Schweiz", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Bayern", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Bayern", "target": "Sachsen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Bayern", "target": "Tschechien", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Bayern", "target": "Hessen", "value": 9, "lineStyle": {"width": 3.1999999999999997}}, {"source": "Bayern", "target": "Th\u00fcringen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Sachsen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Sachsen", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Berlin", "target": "Hessen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Berlin", "target": "Sachsen-Anhalt", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Berlin", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Brandenburg", "target": "Hessen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Brandenburg", "target": "Sachsen-Anhalt", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Brandenburg", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Hessen", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Sachsen-Anhalt", "target": "Th\u00fcringen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Niedersachsen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Frankreich", "target": "Luxemburg", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Frankreich", "target": "Saarland", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Luxemburg", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Luxemburg", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Rheinland-Pfalz", "target": "Saarland", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Belgien", "target": "NRW", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "NRW", "target": "Niederlande", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Niedersachsen", "target": "Sachsen-Anhalt", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Bayern", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Andorra", "target": "Frankreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Andorra", "target": "Spanien", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Baden-Wuerttemberg", "target": "\u00d6sterreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Schweiz", "target": "\u00d6sterreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Berlin", "target": "Hamburg", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Hamburg", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Niedersachsen", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Sachsen-Anhalt", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Polen", "target": "Tschechien", "value": 2, "lineStyle": {"width": 1.1}}];
+            var nodes = [{"id": "Hessen", "name": "Hessen", "symbolSize": 75.0, "value": 535, "category": 0}, {"id": "Spanien", "name": "Spanien", "symbolSize": 17.242990654205606, "value": 20, "category": 0}, {"id": "Niederlande", "name": "Niederlande", "symbolSize": 15.785046728971963, "value": 7, "category": 0}, {"id": "Frankreich", "name": "Frankreich", "symbolSize": 20.94392523364486, "value": 53, "category": 0}, {"id": "Rheinland-Pfalz", "name": "Rheinland-Pfalz", "symbolSize": 48.08411214953271, "value": 295, "category": 0}, {"id": "Baden-Wuerttemberg", "name": "Baden-Wuerttemberg", "symbolSize": 17.130841121495326, "value": 19, "category": 0}, {"id": "Berlin", "name": "Berlin", "symbolSize": 16.906542056074766, "value": 17, "category": 0}, {"id": "Brandenburg", "name": "Brandenburg", "symbolSize": 15.897196261682243, "value": 8, "category": 0}, {"id": "Sachsen", "name": "Sachsen", "symbolSize": 15.897196261682243, "value": 8, "category": 0}, {"id": "Tschechien", "name": "Tschechien", "symbolSize": 16.009345794392523, "value": 9, "category": 0}, {"id": "NRW", "name": "NRW", "symbolSize": 16.457943925233646, "value": 13, "category": 0}, {"id": "Niedersachsen", "name": "Niedersachsen", "symbolSize": 15.785046728971963, "value": 7, "category": 0}, {"id": "Bayern", "name": "Bayern", "symbolSize": 17.46728971962617, "value": 22, "category": 0}, {"id": "Italien", "name": "Italien", "symbolSize": 16.121495327102803, "value": 10, "category": 0}, {"id": "Schweiz", "name": "Schweiz", "symbolSize": 15.336448598130842, "value": 3, "category": 0}, {"id": "\u00d6sterreich", "name": "\u00d6sterreich", "symbolSize": 16.345794392523363, "value": 12, "category": 0}, {"id": "Th\u00fcringen", "name": "Th\u00fcringen", "symbolSize": 16.682242990654206, "value": 15, "category": 0}, {"id": "Sachsen-Anhalt", "name": "Sachsen-Anhalt", "symbolSize": 15.560747663551401, "value": 5, "category": 0}, {"id": "Hamburg", "name": "Hamburg", "symbolSize": 15.448598130841122, "value": 4, "category": 0}, {"id": "Belgien", "name": "Belgien", "symbolSize": 15.22429906542056, "value": 2, "category": 0}, {"id": "Luxemburg", "name": "Luxemburg", "symbolSize": 15.11214953271028, "value": 1, "category": 0}, {"id": "Saarland", "name": "Saarland", "symbolSize": 15.448598130841122, "value": 4, "category": 0}, {"id": "Andorra", "name": "Andorra", "symbolSize": 15.11214953271028, "value": 1, "category": 0}, {"id": "MeckPomm", "name": "MeckPomm", "symbolSize": 15.22429906542056, "value": 2, "category": 0}, {"id": "Schleswig-Holstein", "name": "Schleswig-Holstein", "symbolSize": 15.22429906542056, "value": 2, "category": 0}, {"id": "Polen", "name": "Polen", "symbolSize": 15.336448598130842, "value": 3, "category": 0}];
+            var links = [{"source": "Frankreich", "target": "Rheinland-Pfalz", "value": 17, "lineStyle": {"width": 5.6}}, {"source": "Baden-Wuerttemberg", "target": "Frankreich", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Baden-Wuerttemberg", "target": "Rheinland-Pfalz", "value": 10, "lineStyle": {"width": 3.5}}, {"source": "Hessen", "target": "Rheinland-Pfalz", "value": 247, "lineStyle": {"width": 74.6}}, {"source": "Berlin", "target": "Brandenburg", "value": 5, "lineStyle": {"width": 2.0}}, {"source": "Sachsen", "target": "Tschechien", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Brandenburg", "target": "Sachsen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Hessen", "target": "NRW", "value": 5, "lineStyle": {"width": 2.0}}, {"source": "NRW", "target": "Rheinland-Pfalz", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Hessen", "target": "Niedersachsen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Frankreich", "target": "Spanien", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Frankreich", "target": "Schweiz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Italien", "target": "\u00d6sterreich", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Hessen", "target": "Th\u00fcringen", "value": 12, "lineStyle": {"width": 4.1}}, {"source": "Bayern", "target": "\u00d6sterreich", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Hessen", "value": 8, "lineStyle": {"width": 2.9}}, {"source": "Frankreich", "target": "Hessen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Niedersachsen", "target": "Th\u00fcringen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Schweiz", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Bayern", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Bayern", "target": "Sachsen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Bayern", "target": "Tschechien", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Bayern", "target": "Hessen", "value": 9, "lineStyle": {"width": 3.1999999999999997}}, {"source": "Bayern", "target": "Th\u00fcringen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Sachsen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Sachsen", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Brandenburg", "target": "Hessen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Brandenburg", "target": "Sachsen-Anhalt", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Brandenburg", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Hessen", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Sachsen-Anhalt", "target": "Th\u00fcringen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Niedersachsen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Belgien", "target": "Frankreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Belgien", "target": "Luxemburg", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Belgien", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Belgien", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Frankreich", "target": "Luxemburg", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Frankreich", "target": "Saarland", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Luxemburg", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Luxemburg", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Rheinland-Pfalz", "target": "Saarland", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Belgien", "target": "NRW", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Belgien", "target": "Niederlande", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "NRW", "target": "Niederlande", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Niedersachsen", "target": "Sachsen-Anhalt", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Bayern", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Andorra", "target": "Frankreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Andorra", "target": "Spanien", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Baden-Wuerttemberg", "target": "\u00d6sterreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Schweiz", "target": "\u00d6sterreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Berlin", "target": "Hamburg", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Hamburg", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Niedersachsen", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Sachsen-Anhalt", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Polen", "target": "Tschechien", "value": 2, "lineStyle": {"width": 1.1}}];
             var option = {
                 backgroundColor: '#fcfcfc',
                 tooltip: {},
