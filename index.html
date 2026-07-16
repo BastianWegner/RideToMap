@@ -90,7 +90,6 @@
     </head>
     <body class="map-maximized">
         <div id="map-container"><iframe src="map_part.html"></iframe></div>
-        <div id="debug-overlay" style="position:fixed;top:0;right:0;z-index:10000;font:11px/1.25 monospace;background:rgba(0,0,0,0.6);color:#fff;padding:6px 8px;border-bottom-left-radius:8px;max-width:85vw;pointer-events:none;display:none;"></div>
         
         <div id="control-bar">
             <div id="btn-toggle-main" onclick="toggleMaximize()" title="Ansicht vergrößern/verkleinern">
@@ -5676,127 +5675,6 @@
                 resizeMap();
             };
 
-            // #region agent log
-            (function () {
-                function send(hypothesisId, message, data) {
-                    fetch('http://127.0.0.1:7754/ingest/50f6dd20-af97-42cb-b10b-c0f385206d58', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Debug-Session-Id': '629707'
-                        },
-                        body: JSON.stringify({
-                            sessionId: '629707',
-                            runId: 'post-fix-3',
-                            hypothesisId: hypothesisId,
-                            location: 'index_heat.html:layout',
-                            message: message,
-                            data: data,
-                            timestamp: Date.now()
-                        })
-                    }).catch(function () {});
-                }
-
-                function measureLayout() {
-                    var bar = document.getElementById('control-bar');
-                    var map = document.getElementById('map-container');
-                    var body = document.body;
-                    if (!bar || !map) return;
-                    var barRect = bar.getBoundingClientRect();
-                    var mapRect = map.getBoundingClientRect();
-                    var overlay = document.getElementById('debug-overlay');
-                    var debugMode = false;
-                    try {
-                        debugMode = new URLSearchParams(window.location.search).get('debug') === '1';
-                    } catch (e) {}
-                    var barStyle = getComputedStyle(bar);
-                    var vv = window.visualViewport;
-                    var viewportMeta = document.querySelector('meta[name="viewport"]');
-                    send('A', 'viewport meta check', {
-                        hasViewportMeta: !!viewportMeta,
-                        viewportContent: viewportMeta ? viewportMeta.getAttribute('content') : null,
-                        innerWidth: window.innerWidth,
-                        innerHeight: window.innerHeight,
-                        clientWidth: document.documentElement.clientWidth,
-                        clientHeight: document.documentElement.clientHeight
-                    });
-                    send('B', 'control bar vs viewport', {
-                        bodyClass: body.className,
-                        barTop: barRect.top,
-                        barBottom: barRect.bottom,
-                        barHeight: barRect.height,
-                        barVisible: barRect.bottom <= window.innerHeight && barRect.top >= 0,
-                        mapHeight: mapRect.height,
-                        mapBottom: mapRect.bottom,
-                        totalUsed: mapRect.height + barRect.height,
-                        overflowPx: (mapRect.height + barRect.height) - window.innerHeight,
-                        visualViewportHeight: vv ? vv.height : null,
-                        visualViewportOffsetTop: vv ? vv.offsetTop : null
-                    });
-                    send('F', 'control bar computed style', {
-                        barDisplay: barStyle ? barStyle.display : null,
-                        barVisibility: barStyle ? barStyle.visibility : null,
-                        barOpacity: barStyle ? barStyle.opacity : null,
-                        barTop: barRect.top,
-                        barBottom: barRect.bottom,
-                        barHeight: barRect.height
-                    });
-                    send('C', 'flex overflow check', {
-                        bodyScrollHeight: body.scrollHeight,
-                        bodyClientHeight: body.clientHeight,
-                        bodyOverflowY: getComputedStyle(body).overflowY,
-                        htmlOverflowY: getComputedStyle(document.documentElement).overflowY
-                    });
-                    if (overlay && debugMode) {
-                        var barVisible = barRect.bottom <= window.innerHeight && barRect.top >= 0;
-                        var overflowPx = (mapRect.height + barRect.height) - window.innerHeight;
-                        var heatBase = 'n/a';
-                        var heatZoom = 'n/a';
-                        var mixBlend = 'n/a';
-                        var stroke = 'n/a';
-                        try {
-                            var iframe = map && map.querySelector ? map.querySelector('iframe') : null;
-                            var ifDoc = iframe && (iframe.contentDocument || (iframe.contentWindow && iframe.contentWindow.document));
-                            if (ifDoc && ifDoc.body) {
-                                var classes = Array.from(ifDoc.body.classList);
-                                heatBase = classes.find(function (c) { return c.indexOf('heat-base-') === 0; }) || 'n/a';
-                                heatZoom = classes.find(function (c) { return c.indexOf('heat-zoom-') === 0; }) || 'n/a';
-                                var paths = ifDoc.querySelectorAll('.leaflet-overlay-pane svg path');
-                                if (paths && paths.length && ifDoc.defaultView && ifDoc.defaultView.getComputedStyle) {
-                                    var cs = ifDoc.defaultView.getComputedStyle(paths[0]);
-                                    mixBlend = cs.mixBlendMode || 'n/a';
-                                    stroke = cs.stroke || 'n/a';
-                                }
-                            }
-                        } catch (e) {}
-                        overlay.textContent =
-                            'viewportMeta=' + (!!viewportMeta) +
-                            ' barVisible=' + barVisible +
-                            ' barDisplay=' + (barStyle ? barStyle.display : 'n/a') +
-                            ' overflowPx=' + overflowPx +
-                            ' heatBase=' + heatBase +
-                            ' mixBlend=' + mixBlend;
-                        send('H', 'iframe heat sample', {
-                            heatBase: heatBase,
-                            heatZoom: heatZoom,
-                            mixBlend: mixBlend,
-                            stroke: stroke
-                        });
-                        overlay.style.display = 'block';
-                    }
-                }
-
-                window.addEventListener('load', function () {
-                    measureLayout();
-                    setTimeout(measureLayout, 500);
-                    setTimeout(measureLayout, 2000);
-                    setTimeout(measureLayout, 5000);
-                    var iframe = document.querySelector('#map-container iframe');
-                    if (iframe) iframe.addEventListener('load', function () { setTimeout(measureLayout, 800); });
-                });
-                window.addEventListener('resize', measureLayout);
-            })();
-            // #endregion
         </script>
     </body>
     </html>

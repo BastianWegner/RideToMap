@@ -116,64 +116,6 @@ def inject_multiply_style():
             updateHeatZoom();
             updateHeatBase();
 
-            // #region agent log
-            function sendHeatLog(hypothesisId, message, data) {{
-                fetch('http://127.0.0.1:7754/ingest/50f6dd20-af97-42cb-b10b-c0f385206d58', {{
-                    method: 'POST',
-                    headers: {{
-                        'Content-Type': 'application/json',
-                        'X-Debug-Session-Id': '629707'
-                    }},
-                    body: JSON.stringify({{
-                        sessionId: '629707',
-                        runId: 'post-fix',
-                        hypothesisId: hypothesisId,
-                        location: 'map_part_heat.html:paths',
-                        message: message,
-                        data: data,
-                        timestamp: Date.now()
-                    }})
-                }}).catch(function () {{}});
-            }}
-
-            function samplePaths() {{
-                var paths = document.querySelectorAll('.leaflet-overlay-pane svg path');
-                var zoomClass = Array.from(document.body.classList).find(function (c) {{
-                    return c.indexOf('heat-zoom-') === 0;
-                }}) || null;
-                var baseClass = Array.from(document.body.classList).find(function (c) {{
-                    return c.indexOf('heat-base-') === 0;
-                }}) || null;
-                var samples = [];
-                for (var i = 0; i < Math.min(paths.length, 8); i++) {{
-                    var cs = getComputedStyle(paths[i]);
-                    samples.push({{
-                        index: i,
-                        stroke: cs.stroke,
-                        strokeOpacity: cs.strokeOpacity,
-                        mixBlendMode: cs.mixBlendMode,
-                        filter: cs.filter
-                    }});
-                }}
-                sendHeatLog('D', 'path style sample', {{
-                    pathCount: paths.length,
-                    zoom: heatMap.getZoom(),
-                    zoomClass: zoomClass,
-                    baseClass: baseClass,
-                    samples: samples
-                }});
-            }}
-
-            heatMap.whenReady(function () {{
-                setTimeout(samplePaths, 800);
-                heatMap.on('baselayerchange', function () {{
-                    setTimeout(samplePaths, 300);
-                }});
-                heatMap.on('zoomend', function () {{
-                    setTimeout(samplePaths, 200);
-                }});
-            }});
-            // #endregion
         }})();
     </script>
 """
