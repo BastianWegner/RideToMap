@@ -78,6 +78,7 @@
 <body>
     
     
+            <div id="heat-debug-overlay" style="position:fixed;top:0;left:0;z-index:10000;font:11px/1.25 monospace;background:rgba(0,0,0,0.6);color:#fff;padding:6px 8px;border-bottom-right-radius:8px;max-width:85vw;pointer-events:none;display:none;"></div>
             <div class="folium-map" id="map_b0669747a709a03b2153ed652fd1ea96" ></div>
         
 </body>
@@ -13535,28 +13536,4 @@
                         strokeOpacity: cs.strokeOpacity,
                         mixBlendMode: cs.mixBlendMode,
                         filter: cs.filter
-                    });
-                }
-                sendHeatLog('D', 'path style sample', {
-                    pathCount: paths.length,
-                    zoom: heatMap.getZoom(),
-                    zoomClass: zoomClass,
-                    baseClass: baseClass,
-                    samples: samples
-                });
-            }
-
-            heatMap.whenReady(function () {
-                setTimeout(samplePaths, 800);
-                heatMap.on('baselayerchange', function () {
-                    setTimeout(samplePaths, 300);
-                });
-                heatMap.on('zoomend', function () {
-                    setTimeout(samplePaths, 200);
-                });
-            });
-            // #endregion
-        })();
-    </script>
-
-</html>
+   
