@@ -376,7 +376,9 @@ def main():
     <!DOCTYPE html>
     <html lang="de">
     <head>
-        <meta charset="UTF-8"> <title>RIDE TO MAP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>RIDE TO MAP</title>
         <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
         
         <style>
@@ -385,25 +387,43 @@ def main():
             /* ZUSTÄNDE FÜR DAS LAYOUT (Maximieren/Minimieren) */
             
             /* 1. Karte Maximiert (Standard) */
-            body.map-maximized #map-container {{ height: calc(100vh - 5vh); border-bottom: none; }}
-            body.map-maximized #content-area {{ height: 0; border-top: none; }}
+            body.map-maximized #map-container {{ flex: 1 1 auto; height: auto; min-height: 0; border-bottom: none; }}
+            body.map-maximized #content-area {{ flex: 0 0 0; height: 0; min-height: 0; border-top: none; }}
             body.map-maximized #control-bar {{ border-bottom: none; }}
             
             /* 2. Inhalt Maximiert (Tabelle/Graph groß) */
-            body.content-maximized #map-container {{ height: 5vh; border-bottom: 1px solid #e0e0e0; }}
-            body.content-maximized #content-area {{ height: 90vh; border-top: 1px solid #e0e0e0; }}
+            body.content-maximized #map-container {{ flex: 0 0 48px; height: 48px; min-height: 48px; border-bottom: 1px solid #e0e0e0; }}
+            body.content-maximized #content-area {{ flex: 1 1 auto; height: auto; min-height: 0; border-top: 1px solid #e0e0e0; }}
             
             /* Allgemeines Layout */
-            body {{ margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fff; color: #333; transition: height 0.3s; }}
+            html, body {{ margin: 0; padding: 0; height: 100%; }}
+            body {{
+                height: 100dvh;
+                max-height: 100dvh;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                background: #fff;
+                color: #333;
+            }}
             
-            #map-container {{ height: 55vh; width: 100%; border-bottom: 1px solid #e0e0e0; transition: height 0.3s; }}
-            iframe {{ width: 100%; height: 100%; border: none; }}
+            #map-container {{ flex: 1 1 auto; width: 100%; min-height: 0; border-bottom: 1px solid #e0e0e0; }}
+            iframe {{ width: 100%; height: 100%; border: none; display: block; }}
             
             /* Steuerleiste */
             #control-bar {{
-                height: 5vh; min-height: 40px; background-color: #f9f9f9; 
-                display: flex; justify-content: center; align-items: center; padding: 0 15px; transition: border-bottom 0.3s;
-                gap: 15px; 
+                flex: 0 0 auto;
+                height: 48px;
+                min-height: 48px;
+                background-color: #f9f9f9;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 15px;
+                gap: 15px;
+                z-index: 20;
+                padding-bottom: env(safe-area-inset-bottom, 0px);
             }}
             
             /* Toggle Button (Pfeil) */
@@ -425,9 +445,9 @@ def main():
             }}
 
             /* Inhaltsbereich */
-            #content-area {{ height: 40vh; position: relative; width: 100%; overflow: hidden; transition: height 0.3s; }}
+            #content-area {{ position: relative; width: 100%; overflow: hidden; min-height: 0; }}
             
-            #list-view {{ height: 100%; width: 100%; overflow-y: auto; background: #fff; display: block; }}
+            #list-view {{ height: 100%; width: 100%; overflow-y: auto; background: #fff; display: block; -webkit-overflow-scrolling: touch; }}
             #graph-view {{ height: 100%; width: 100%; display: none; background-color: #fcfcfc; }}
             
             /* Tabelle */

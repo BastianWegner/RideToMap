@@ -25,23 +25,24 @@ base.LINIEN_OPACITY = 0.25
 
 MULTIPLY_STYLE = """
     <style id="ride-to-map-heat-style">
-        .leaflet-overlay-pane svg path {
+        /* Light map: multiply for heat stacking. Dark map: screen so lines stay orange. */
+        body.heat-base-light .leaflet-overlay-pane svg path {
             mix-blend-mode: multiply;
+        }
+        body.heat-base-dark .leaflet-overlay-pane svg path {
+            mix-blend-mode: screen;
         }
         body.heat-zoom-far .leaflet-overlay-pane svg path {
             stroke-width: 1.2px !important;
-            stroke-opacity: 0.08 !important;
-            filter: blur(0.65px);
+            stroke-opacity: 0.12 !important;
         }
         body.heat-zoom-medium .leaflet-overlay-pane svg path {
             stroke-width: 1.6px !important;
-            stroke-opacity: 0.15 !important;
-            filter: blur(0.3px);
+            stroke-opacity: 0.2 !important;
         }
         body.heat-zoom-near .leaflet-overlay-pane svg path {
             stroke-width: 2px !important;
-            stroke-opacity: 0.25 !important;
-            filter: none;
+            stroke-opacity: 0.3 !important;
         }
     </style>
 """
@@ -65,8 +66,6 @@ def inject_multiply_style():
     map_path = Path(base.KARTE_DATEI)
     html = map_path.read_text(encoding="utf-8")
 
-    if 'id="ride-to-map-heat-style"' in html:
-        return
     if "</head>" not in html:
         raise RuntimeError(f"Kein </head>-Element in {map_path} gefunden.")
 
@@ -84,6 +83,7 @@ def inject_multiply_style():
                 "heat-zoom-medium",
                 "heat-zoom-near"
             ];
+            const baseClasses = ["heat-base-light", "heat-base-dark"];
 
             function updateHeatZoom() {{
                 const zoom = heatMap.getZoom();
@@ -97,12 +97,99 @@ def inject_multiply_style():
                 );
             }}
 
+            function updateHeatBase() {{
+                let isDark = false;
+                heatMap.eachLayer(function (layer) {{
+                    if (layer instanceof L.TileLayer) {{
+                        const url = layer._url || "";
+                        if (url.indexOf("dark_all") !== -1 && heatMap.hasLayer(layer)) {{
+                            isDark = true;
+                        }}
+                    }}
+                }});
+                document.body.classList.remove(...baseClasses);
+                document.body.classList.add(isDark ? "heat-base-dark" : "heat-base-light");
+            }}
+
             heatMap.on("zoomend", updateHeatZoom);
+            heatMap.on("baselayerchange", updateHeatBase);
             updateHeatZoom();
+            updateHeatBase();
+
+            // #region agent log
+            function sendHeatLog(hypothesisId, message, data) {{
+                fetch('http://127.0.0.1:7754/ingest/50f6dd20-af97-42cb-b10b-c0f385206d58', {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                        'X-Debug-Session-Id': '629707'
+                    }},
+                    body: JSON.stringify({{
+                        sessionId: '629707',
+                        runId: 'post-fix',
+                        hypothesisId: hypothesisId,
+                        location: 'map_part_heat.html:paths',
+                        message: message,
+                        data: data,
+                        timestamp: Date.now()
+                    }})
+                }}).catch(function () {{}});
+            }}
+
+            function samplePaths() {{
+                var paths = document.querySelectorAll('.leaflet-overlay-pane svg path');
+                var zoomClass = Array.from(document.body.classList).find(function (c) {{
+                    return c.indexOf('heat-zoom-') === 0;
+                }}) || null;
+                var baseClass = Array.from(document.body.classList).find(function (c) {{
+                    return c.indexOf('heat-base-') === 0;
+                }}) || null;
+                var samples = [];
+                for (var i = 0; i < Math.min(paths.length, 8); i++) {{
+                    var cs = getComputedStyle(paths[i]);
+                    samples.push({{
+                        index: i,
+                        stroke: cs.stroke,
+                        strokeOpacity: cs.strokeOpacity,
+                        mixBlendMode: cs.mixBlendMode,
+                        filter: cs.filter
+                    }});
+                }}
+                sendHeatLog('D', 'path style sample', {{
+                    pathCount: paths.length,
+                    zoom: heatMap.getZoom(),
+                    zoomClass: zoomClass,
+                    baseClass: baseClass,
+                    samples: samples
+                }});
+            }}
+
+            heatMap.whenReady(function () {{
+                setTimeout(samplePaths, 800);
+                heatMap.on('baselayerchange', function () {{
+                    setTimeout(samplePaths, 300);
+                }});
+                heatMap.on('zoomend', function () {{
+                    setTimeout(samplePaths, 200);
+                }});
+            }});
+            // #endregion
         }})();
     </script>
 """
 
+    html = re.sub(
+        r'<style id="ride-to-map-heat-style">[\s\S]*?</style>\s*',
+        "",
+        html,
+        count=1,
+    )
+    html = re.sub(
+        r'<script id="ride-to-map-heat-zoom">[\s\S]*?</script>\s*',
+        "",
+        html,
+        count=1,
+    )
     html = html.replace("</head>", f"{MULTIPLY_STYLE}\n</head>", 1)
     html = html.replace("</html>", f"{zoom_script}\n</html>", 1)
     map_path.write_text(html, encoding="utf-8")

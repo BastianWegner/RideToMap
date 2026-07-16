@@ -2,7 +2,9 @@
     <!DOCTYPE html>
     <html lang="de">
     <head>
-        <meta charset="UTF-8"> <title>RIDE TO MAP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>RIDE TO MAP</title>
         <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
         
         <style>
@@ -11,25 +13,43 @@
             /* ZUSTÄNDE FÜR DAS LAYOUT (Maximieren/Minimieren) */
             
             /* 1. Karte Maximiert (Standard) */
-            body.map-maximized #map-container { height: calc(100vh - 5vh); border-bottom: none; }
-            body.map-maximized #content-area { height: 0; border-top: none; }
+            body.map-maximized #map-container { flex: 1 1 auto; height: auto; min-height: 0; border-bottom: none; }
+            body.map-maximized #content-area { flex: 0 0 0; height: 0; min-height: 0; border-top: none; }
             body.map-maximized #control-bar { border-bottom: none; }
             
             /* 2. Inhalt Maximiert (Tabelle/Graph groß) */
-            body.content-maximized #map-container { height: 5vh; border-bottom: 1px solid #e0e0e0; }
-            body.content-maximized #content-area { height: 90vh; border-top: 1px solid #e0e0e0; }
+            body.content-maximized #map-container { flex: 0 0 48px; height: 48px; min-height: 48px; border-bottom: 1px solid #e0e0e0; }
+            body.content-maximized #content-area { flex: 1 1 auto; height: auto; min-height: 0; border-top: 1px solid #e0e0e0; }
             
             /* Allgemeines Layout */
-            body { margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fff; color: #333; transition: height 0.3s; }
+            html, body { margin: 0; padding: 0; height: 100%; }
+            body {
+                height: 100dvh;
+                max-height: 100dvh;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                background: #fff;
+                color: #333;
+            }
             
-            #map-container { height: 55vh; width: 100%; border-bottom: 1px solid #e0e0e0; transition: height 0.3s; }
-            iframe { width: 100%; height: 100%; border: none; }
+            #map-container { flex: 1 1 auto; width: 100%; min-height: 0; border-bottom: 1px solid #e0e0e0; }
+            iframe { width: 100%; height: 100%; border: none; display: block; }
             
             /* Steuerleiste */
             #control-bar {
-                height: 5vh; min-height: 40px; background-color: #f9f9f9; 
-                display: flex; justify-content: center; align-items: center; padding: 0 15px; transition: border-bottom 0.3s;
-                gap: 15px; 
+                flex: 0 0 auto;
+                height: 48px;
+                min-height: 48px;
+                background-color: #f9f9f9;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 15px;
+                gap: 15px;
+                z-index: 20;
+                padding-bottom: env(safe-area-inset-bottom, 0px);
             }
             
             /* Toggle Button (Pfeil) */
@@ -51,9 +71,9 @@
             }
 
             /* Inhaltsbereich */
-            #content-area { height: 40vh; position: relative; width: 100%; overflow: hidden; transition: height 0.3s; }
+            #content-area { position: relative; width: 100%; overflow: hidden; min-height: 0; }
             
-            #list-view { height: 100%; width: 100%; overflow-y: auto; background: #fff; display: block; }
+            #list-view { height: 100%; width: 100%; overflow-y: auto; background: #fff; display: block; -webkit-overflow-scrolling: touch; }
             #graph-view { height: 100%; width: 100%; display: none; background-color: #fcfcfc; }
             
             /* Tabelle */
@@ -5653,6 +5673,73 @@
                 document.getElementById('toggle-icon').innerHTML = '▼';
                 resizeMap();
             };
+
+            // #region agent log
+            (function () {
+                function send(hypothesisId, message, data) {
+                    fetch('http://127.0.0.1:7754/ingest/50f6dd20-af97-42cb-b10b-c0f385206d58', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Debug-Session-Id': '629707'
+                        },
+                        body: JSON.stringify({
+                            sessionId: '629707',
+                            runId: 'post-fix',
+                            hypothesisId: hypothesisId,
+                            location: 'index_heat.html:layout',
+                            message: message,
+                            data: data,
+                            timestamp: Date.now()
+                        })
+                    }).catch(function () {});
+                }
+
+                function measureLayout() {
+                    var bar = document.getElementById('control-bar');
+                    var map = document.getElementById('map-container');
+                    var body = document.body;
+                    if (!bar || !map) return;
+                    var barRect = bar.getBoundingClientRect();
+                    var mapRect = map.getBoundingClientRect();
+                    var vv = window.visualViewport;
+                    var viewportMeta = document.querySelector('meta[name="viewport"]');
+                    send('A', 'viewport meta check', {
+                        hasViewportMeta: !!viewportMeta,
+                        viewportContent: viewportMeta ? viewportMeta.getAttribute('content') : null,
+                        innerWidth: window.innerWidth,
+                        innerHeight: window.innerHeight,
+                        clientWidth: document.documentElement.clientWidth,
+                        clientHeight: document.documentElement.clientHeight
+                    });
+                    send('B', 'control bar vs viewport', {
+                        bodyClass: body.className,
+                        barTop: barRect.top,
+                        barBottom: barRect.bottom,
+                        barHeight: barRect.height,
+                        barVisible: barRect.bottom <= window.innerHeight && barRect.top >= 0,
+                        mapHeight: mapRect.height,
+                        mapBottom: mapRect.bottom,
+                        totalUsed: mapRect.height + barRect.height,
+                        overflowPx: (mapRect.height + barRect.height) - window.innerHeight,
+                        visualViewportHeight: vv ? vv.height : null,
+                        visualViewportOffsetTop: vv ? vv.offsetTop : null
+                    });
+                    send('C', 'flex overflow check', {
+                        bodyScrollHeight: body.scrollHeight,
+                        bodyClientHeight: body.clientHeight,
+                        bodyOverflowY: getComputedStyle(body).overflowY,
+                        htmlOverflowY: getComputedStyle(document.documentElement).overflowY
+                    });
+                }
+
+                window.addEventListener('load', function () {
+                    measureLayout();
+                    setTimeout(measureLayout, 500);
+                });
+                window.addEventListener('resize', measureLayout);
+            })();
+            // #endregion
         </script>
     </body>
     </html>
