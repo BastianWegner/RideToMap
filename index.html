@@ -2,115 +2,87 @@
     <!DOCTYPE html>
     <html lang="de">
     <head>
-        <meta charset="UTF-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title>My Tracks</title>
+        <meta charset="UTF-8"> <title>RIDE TO MAP</title>
         <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
         
         <style>
-            /* --- LAYOUT OPTIMIERUNG --- */
-            body { 
-                margin: 0; padding: 0; 
-                height: 100dvh; /* Mobile Fix: Dynamic Viewport Height */
-                display: flex; flex-direction: column; 
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-                background: #fff; color: #333; 
-                overflow: hidden; 
-                transition: height 0.3s; 
-            }
+            /* --- CSS STYLES --- */
             
-            /* ZUSTÄNDE */
-            body.map-maximized #map-container { height: calc(100dvh - 5vh); border-bottom: none; }
+            /* ZUSTÄNDE FÜR DAS LAYOUT (Maximieren/Minimieren) */
+            
+            /* 1. Karte Maximiert (Standard) */
+            body.map-maximized #map-container { height: calc(100vh - 5vh); border-bottom: none; }
             body.map-maximized #content-area { height: 0; border-top: none; }
             body.map-maximized #control-bar { border-bottom: none; }
             
-            body.content-maximized #map-container { height: 5dvh; border-bottom: 1px solid #e0e0e0; }
-            body.content-maximized #content-area { height: 95dvh; border-top: 1px solid #e0e0e0; }
+            /* 2. Inhalt Maximiert (Tabelle/Graph groß) */
+            body.content-maximized #map-container { height: 5vh; border-bottom: 1px solid #e0e0e0; }
+            body.content-maximized #content-area { height: 90vh; border-top: 1px solid #e0e0e0; }
             
-            /* Karte */
-            #map-container { width: 100%; position: relative; transition: height 0.3s ease; }
+            /* Allgemeines Layout */
+            body { margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fff; color: #333; transition: height 0.3s; }
+            
+            #map-container { height: 55vh; width: 100%; border-bottom: 1px solid #e0e0e0; transition: height 0.3s; }
             iframe { width: 100%; height: 100%; border: none; }
             
-            /* --- BLUR EFFECT STYLES --- */
-            #map-blur-overlay {
-                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                
-                pointer-events: auto; 
-                cursor: pointer;
-                z-index: 400; 
-                
-                /* Milchglas-Effekt mit Loch in der Mitte */
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-                mask-image: radial-gradient(circle at center, transparent 30%, black 80%);
-                -webkit-mask-image: radial-gradient(circle at center, transparent 30%, black 80%);
-                
-                transition: opacity 1.0s ease-out;
-                opacity: 1;
-            }
-            
-            #map-blur-overlay.hidden {
-                opacity: 0;
-                pointer-events: none !important;
-            }
-
-            /* NEU: NEON GLOW / WEICHZEICHNER FÜR DIE LINIEN */
-            .leaflet-overlay-pane svg path {
-                /* Ein kleiner Blur-Wert macht die Kanten weich und lässt die Linien "ausfransen" */
-                filter: blur(1px);
-                mix-blend-mode: screen; 
-            }
-
             /* Steuerleiste */
             #control-bar {
-                height: 5dvh; min-height: 50px; background-color: #f9f9f9; 
-                display: flex; justify-content: center; align-items: center; 
-                padding: 0 15px; gap: 15px; 
-                z-index: 1000; position: relative;
-                box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+                height: 5vh; min-height: 40px; background-color: #f9f9f9; 
+                display: flex; justify-content: center; align-items: center; padding: 0 15px; transition: border-bottom 0.3s;
+                gap: 15px; 
             }
             
+            /* Toggle Button (Pfeil) */
             #btn-toggle-main {
                 background: #fff; color: #555; font-size: 16px; font-weight: 700;
-                padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; 
-                cursor: pointer; user-select: none; transition: background 0.2s;
+                padding: 4px 10px; border: 1px solid #ccc; border-radius: 6px; 
+                cursor: pointer; user-select: none; transition: background 0.2s, color 0.2s;
             }
-
-            .segmented-control { display: flex; background: #e0e0e0; border-radius: 8px; padding: 4px; }
+            #btn-toggle-main:hover { background: #eee; color: #333; }
+            
+            /* Umschalter Logbuch/Kosmos */
+            .segmented-control { display: flex; background: #e0e0e0; border-radius: 8px; padding: 3px; }
             .toggle-btn {
-                padding: 6px 20px; font-size: 13px; font-weight: 600; color: #777; cursor: pointer; border-radius: 6px; 
-                user-select: none; transition: all 0.2s; text-transform: uppercase;
+                padding: 4px 20px; font-size: 12px; font-weight: 600; color: #777; cursor: pointer; border-radius: 6px; 
+                user-select: none; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;
             }
-            .toggle-btn.active { background: #fff; color: #000; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+            .toggle-btn.active {
+                background: #fff; color: #000; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+            }
 
-            /* Inhalt */
-            #content-area { position: relative; width: 100%; overflow: hidden; transition: height 0.3s; }
+            /* Inhaltsbereich */
+            #content-area { height: 40vh; position: relative; width: 100%; overflow: hidden; transition: height 0.3s; }
+            
             #list-view { height: 100%; width: 100%; overflow-y: auto; background: #fff; display: block; }
             #graph-view { height: 100%; width: 100%; display: none; background-color: #fcfcfc; }
             
+            /* Tabelle */
             table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
-            th { text-align: left; padding: 10px 15px; background: #fff; z-index: 10; border-bottom: 1px solid #eee; }
-            td { padding: 10px 15px; border-bottom: 1px solid #f8f8f8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            th { text-align: left; padding: 10px 15px; color: #999; font-weight: 500; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: #fff; z-index: 10; }
+            td { padding: 8px 15px; border-bottom: 1px solid #f8f8f8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            tr:hover td { background: #f5f5f5; cursor: pointer; color: #000; }
+            
+            .col-name { width: 45%; } .col-region { width: 25%; color: #666; font-size: 11px; text-transform: uppercase; }
+            .col-km { width: 15%; text-align: right; color: #888; } .col-date { width: 15%; text-align: right; color: #aaa; }
+            ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-thumb { background: #eee; border-radius: 3px; }
         </style>
     </head>
     <body class="map-maximized">
-        <div id="map-container">
-            <iframe src="map_part.html" id="map-frame"></iframe>
-            <div id="map-blur-overlay"></div>
-        </div>
+        <div id="map-container"><iframe src="map_part.html"></iframe></div>
         
         <div id="control-bar">
-            <div id="btn-toggle-main" onclick="toggleMaximize()">
+            <div id="btn-toggle-main" onclick="toggleMaximize()" title="Ansicht vergrößern/verkleinern">
                 <span id="toggle-icon">▼</span>
             </div>
+
             <div class="segmented-control">
                 <div id="btn-list" class="toggle-btn active" onclick="switchView('list')">Logbuch</div>
                 <div id="btn-graph" class="toggle-btn" onclick="switchView('graph')">Kosmos</div>
             </div>
         </div>
         
-        <div id="graph-info" style="display:none; text-align:center; font-size:11px; color:#999; padding:5px 0; background:#f9f9f9;">
-            Kreise: Häufigkeit &middot; Linien: Verbindungen
+        <div id="graph-info" style="display:none; text-align:center; font-size:11px; color:#999; margin-top:0; padding:5px 0; background:#f9f9f9; border-bottom:1px solid #e0e0e0;">
+            Kreise zeigen die Häufigkeit der Tour im Bundesland &middot; Linien markieren grenzüberschreitende Fahrten.
         </div>
 
         <div id="content-area">
@@ -470,7 +442,7 @@
             
             <tr>
                 <td class="col-name" title="Schnelle Runde zum Feierabend (Completed)">Schnelle Runde zum Feierabend (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">44.28 km</td>
                 <td class="col-date">07.2020</td>
             </tr>
@@ -610,7 +582,7 @@
             
             <tr>
                 <td class="col-name" title="Bastian Wegner - Orbit360 RlP - 12:12 (Completed)">Bastian Wegner - Orbit360 RlP - 12:12 (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
                 <td class="col-km">225.21 km</td>
                 <td class="col-date">08.2020</td>
             </tr>
@@ -932,7 +904,7 @@
             
             <tr>
                 <td class="col-name" title="Eins, zwei, drei, vier Eckstein, alles muss versteckt sein. #Bike-Loft Adventurekalender °4 (Completed)">Eins, zwei, drei, vier Eckstein, alles muss versteckt sein. #Bike-Loft Adventurekalender °4 (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">37.13 km</td>
                 <td class="col-date">12.2020</td>
             </tr>
@@ -953,7 +925,7 @@
             
             <tr>
                 <td class="col-name" title="Fünfhundertsechzehn #Festive500 (Completed)">Fünfhundertsechzehn #Festive500 (Completed)</td>
-                <td class="col-region" title="Brandenburg, Hessen, Sachsen-Anhalt, Thüringen">Brandenburg, Hessen, Sachsen-Anhalt, Thüringen</td>
+                <td class="col-region" title="Berlin, Brandenburg, Hessen, Sachsen-Anhalt, Thüringen">Berlin, Brandenburg, Hessen, Sachsen-Anhalt, Thüringen</td>
                 <td class="col-km">516.01 km</td>
                 <td class="col-date">12.2020</td>
             </tr>
@@ -1002,7 +974,7 @@
             
             <tr>
                 <td class="col-name" title="Router einrichten (Completed)">Router einrichten (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">25.12 km</td>
                 <td class="col-date">01.2021</td>
             </tr>
@@ -1037,7 +1009,7 @@
             
             <tr>
                 <td class="col-name" title="Hochwasserumleitung (Completed)">Hochwasserumleitung (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">62.27 km</td>
                 <td class="col-date">02.2021</td>
             </tr>
@@ -1226,7 +1198,7 @@
             
             <tr>
                 <td class="col-name" title="Modeselektor (Completed)">Modeselektor (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">43.49 km</td>
                 <td class="col-date">04.2021</td>
             </tr>
@@ -1471,14 +1443,14 @@
             
             <tr>
                 <td class="col-name" title="Eberbacher Str. (Completed)">Eberbacher Str. (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">38.11 km</td>
                 <td class="col-date">07.2021</td>
             </tr>
             
             <tr>
                 <td class="col-name" title="Bike-Loft Samstagstour (Completed)">Bike-Loft Samstagstour (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">48.47 km</td>
                 <td class="col-date">07.2021</td>
             </tr>
@@ -1744,7 +1716,7 @@
             
             <tr>
                 <td class="col-name" title="Cycling (Completed)">Cycling (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">35.72 km</td>
                 <td class="col-date">10.2021</td>
             </tr>
@@ -2122,7 +2094,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">29.03 km</td>
                 <td class="col-date">04.2022</td>
             </tr>
@@ -2304,7 +2276,7 @@
             
             <tr>
                 <td class="col-name" title="Begleitfahrt HH-BE-HH 2022 (Completed)">Begleitfahrt HH-BE-HH 2022 (Completed)</td>
-                <td class="col-region" title="Berlin">Berlin</td>
+                <td class="col-region" title="Berlin, Brandenburg">Berlin, Brandenburg</td>
                 <td class="col-km">50.96 km</td>
                 <td class="col-date">06.2022</td>
             </tr>
@@ -2360,7 +2332,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">49.35 km</td>
                 <td class="col-date">07.2022</td>
             </tr>
@@ -2507,7 +2479,7 @@
             
             <tr>
                 <td class="col-name" title="#GoingDutch - A bridge too far... (Completed)">#GoingDutch - A bridge too far... (Completed)</td>
-                <td class="col-region" title="Niederlande">Niederlande</td>
+                <td class="col-region" title="Belgien, Niederlande">Belgien, Niederlande</td>
                 <td class="col-km">146.23 km</td>
                 <td class="col-date">08.2022</td>
             </tr>
@@ -3221,7 +3193,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">38.33 km</td>
                 <td class="col-date">08.2023</td>
             </tr>
@@ -3305,7 +3277,7 @@
             
             <tr>
                 <td class="col-name" title="langgestreckt auf einem Berggrat _ 1. (Completed)">langgestreckt auf einem Berggrat _ 1. (Completed)</td>
-                <td class="col-region" title="Frankreich, Rheinland-Pfalz">Frankreich, Rheinland-Pfalz</td>
+                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
                 <td class="col-km">86.17 km</td>
                 <td class="col-date">10.2023</td>
             </tr>
@@ -3326,14 +3298,14 @@
             
             <tr>
                 <td class="col-name" title="Cycling (Completed)">Cycling (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">41.64 km</td>
                 <td class="col-date">10.2023</td>
             </tr>
             
             <tr>
                 <td class="col-name" title="Cycling (Completed)">Cycling (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">58.53 km</td>
                 <td class="col-date">10.2023</td>
             </tr>
@@ -3354,7 +3326,7 @@
             
             <tr>
                 <td class="col-name" title="Cycling (Completed)">Cycling (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">45.88 km</td>
                 <td class="col-date">10.2023</td>
             </tr>
@@ -3375,7 +3347,7 @@
             
             <tr>
                 <td class="col-name" title="HighFIVE (1) of (2) (Completed)">HighFIVE (1) of (2) (Completed)</td>
-                <td class="col-region" title="Belgien, Frankreich, Luxemburg, Rheinland-Pfalz, Saarland">Belgien, Frankreich, Luxemburg, Rheinland-Pfalz, Saarland</td>
+                <td class="col-region" title="Frankreich, Luxemburg, Rheinland-Pfalz, Saarland">Frankreich, Luxemburg, Rheinland-Pfalz, Saarland</td>
                 <td class="col-km">224.01 km</td>
                 <td class="col-date">11.2023</td>
             </tr>
@@ -3459,7 +3431,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
                 <td class="col-km">61.03 km</td>
                 <td class="col-date">01.2024</td>
             </tr>
@@ -3753,7 +3725,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">59.4 km</td>
                 <td class="col-date">05.2024</td>
             </tr>
@@ -3907,7 +3879,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">52.36 km</td>
                 <td class="col-date">07.2024</td>
             </tr>
@@ -3998,7 +3970,7 @@
             
             <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">36.6 km</td>
                 <td class="col-date">07.2024</td>
             </tr>
@@ -4138,7 +4110,7 @@
             
             <tr>
                 <td class="col-name" title="FR: Septembre un 🍇🚜🌽🌻🌤🍎🍁 (Completed)">FR: Septembre un 🍇🚜🌽🌻🌤🍎🍁 (Completed)</td>
-                <td class="col-region" title="Frankreich, Hessen, Rheinland-Pfalz">Frankreich, Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">166.04 km</td>
                 <td class="col-date">09.2024</td>
             </tr>
@@ -4152,7 +4124,7 @@
             
             <tr>
                 <td class="col-name" title="FR: Septembre trois 🍇🚜🌽🌻🌤🍎🍁 (Completed)">FR: Septembre trois 🍇🚜🌽🌻🌤🍎🍁 (Completed)</td>
-                <td class="col-region" title="Frankreich">Frankreich</td>
+                <td class="col-region" title="Frankreich, Rheinland-Pfalz">Frankreich, Rheinland-Pfalz</td>
                 <td class="col-km">148.71 km</td>
                 <td class="col-date">09.2024</td>
             </tr>
@@ -4201,7 +4173,7 @@
             
             <tr>
                 <td class="col-name" title="WASSERKUPPE. (Completed)">WASSERKUPPE. (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Bayern, Hessen">Bayern, Hessen</td>
                 <td class="col-km">195.26 km</td>
                 <td class="col-date">10.2024</td>
             </tr>
@@ -4264,7 +4236,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">28.01 km</td>
                 <td class="col-date">12.2024</td>
             </tr>
@@ -4341,7 +4313,7 @@
             
             <tr>
                 <td class="col-name" title="Ri Sü n Fr un hoc (Completed)">Ri Sü n Fr un hoc (Completed)</td>
-                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
+                <td class="col-region" title="Frankreich, Rheinland-Pfalz">Frankreich, Rheinland-Pfalz</td>
                 <td class="col-km">96.82 km</td>
                 <td class="col-date">03.2025</td>
             </tr>
@@ -4432,7 +4404,7 @@
             
             <tr>
                 <td class="col-name" title="16 PEAKS No. 12 - Brandenburg. [čtyři] (Completed)">16 PEAKS No. 12 - Brandenburg. [čtyři] (Completed)</td>
-                <td class="col-region" title="Brandenburg, Sachsen">Brandenburg, Sachsen</td>
+                <td class="col-region" title="Sachsen">Sachsen</td>
                 <td class="col-km">96.51 km</td>
                 <td class="col-date">04.2025</td>
             </tr>
@@ -4922,7 +4894,7 @@
             
             <tr>
                 <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
-                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">114.67 km</td>
                 <td class="col-date">09.2025</td>
             </tr>
@@ -4971,7 +4943,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Bayern, Hessen">Bayern, Hessen</td>
+                <td class="col-region" title="Hessen">Hessen</td>
                 <td class="col-km">208.5 km</td>
                 <td class="col-date">10.2025</td>
             </tr>
@@ -5076,7 +5048,7 @@
             
             <tr>
                 <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
-                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
                 <td class="col-km">130.45 km</td>
                 <td class="col-date">11.2025</td>
             </tr>
@@ -5194,10 +5166,409 @@
             </tr>
             
             <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">19.66 km</td>
+                <td class="col-date">02.2026</td>
+            </tr>
+            
+            <tr>
                 <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
                 <td class="col-region" title="Hessen">Hessen</td>
-                <td class="col-km">0.02 km</td>
+                <td class="col-km">36.6 km</td>
                 <td class="col-date">02.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">58.9 km</td>
+                <td class="col-date">02.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="březen 1 (Completed)">březen 1 (Completed)</td>
+                <td class="col-region" title="Bayern">Bayern</td>
+                <td class="col-km">63.09 km</td>
+                <td class="col-date">03.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="březen 2 (Completed)">březen 2 (Completed)</td>
+                <td class="col-region" title="Bayern, Tschechien">Bayern, Tschechien</td>
+                <td class="col-km">162.08 km</td>
+                <td class="col-date">03.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="březen 3 (Completed)">březen 3 (Completed)</td>
+                <td class="col-region" title="Sachsen, Tschechien">Sachsen, Tschechien</td>
+                <td class="col-km">176.96 km</td>
+                <td class="col-date">03.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">25.26 km</td>
+                <td class="col-date">03.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">30.91 km</td>
+                <td class="col-date">03.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">68.42 km</td>
+                <td class="col-date">03.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">66.14 km</td>
+                <td class="col-date">03.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Traversée des Vosges I (Completed)">Traversée des Vosges I (Completed)</td>
+                <td class="col-region" title="Frankreich, Schweiz">Frankreich, Schweiz</td>
+                <td class="col-km">124.66 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Traversée des Vosges II (Completed)">Traversée des Vosges II (Completed)</td>
+                <td class="col-region" title="Frankreich">Frankreich</td>
+                <td class="col-km">162.56 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Traversée des Vosges III (Completed)">Traversée des Vosges III (Completed)</td>
+                <td class="col-region" title="Frankreich, Rheinland-Pfalz">Frankreich, Rheinland-Pfalz</td>
+                <td class="col-km">159.29 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Traversée des Vosges IIII (Completed)">Traversée des Vosges IIII (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">115.14 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">12.79 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">16.58 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">21.13 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">51.03 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">35.15 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">50.59 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">49.4 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">78.29 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="FRUEHSTUECK. (Completed)">FRUEHSTUECK. (Completed)</td>
+                <td class="col-region" title="Baden-Wuerttemberg, Hessen, Rheinland-Pfalz">Baden-Wuerttemberg, Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">91.02 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Baden-Wuerttemberg, Hessen, Rheinland-Pfalz">Baden-Wuerttemberg, Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">96.76 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">117.96 km</td>
+                <td class="col-date">04.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">46.11 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">103.74 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">105.04 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">49.1 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">39.62 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">7.49 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">52.27 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">89.46 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">49.88 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="no wind, no hills (Completed)">no wind, no hills (Completed)</td>
+                <td class="col-region" title="Niederlande">Niederlande</td>
+                <td class="col-km">75.04 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="much flat, much water (Completed)">much flat, much water (Completed)</td>
+                <td class="col-region" title="Niederlande">Niederlande</td>
+                <td class="col-km">158.11 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="long way, back home (Completed)">long way, back home (Completed)</td>
+                <td class="col-region" title="Niederlande">Niederlande</td>
+                <td class="col-km">204.5 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Rheinland-Pfalz">Rheinland-Pfalz</td>
+                <td class="col-km">178.65 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Frankreich">Frankreich</td>
+                <td class="col-km">2.32 km</td>
+                <td class="col-date">05.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">65.1 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">65.73 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">178.28 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">38.47 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Bayern, Hessen">Bayern, Hessen</td>
+                <td class="col-km">192.72 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">127.24 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">59.05 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">105.79 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Morning Ride (Completed)">Morning Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">111.53 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="[CH] Prequel. 8ter Kurs. Day 0 (Completed)">[CH] Prequel. 8ter Kurs. Day 0 (Completed)</td>
+                <td class="col-region" title="Baden-Wuerttemberg, Frankreich">Baden-Wuerttemberg, Frankreich</td>
+                <td class="col-km">16.47 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="[CH] 8ter Kurs mit Rhein-Schleife. Day 1 (Completed)">[CH] 8ter Kurs mit Rhein-Schleife. Day 1 (Completed)</td>
+                <td class="col-region" title="Italien, Schweiz">Italien, Schweiz</td>
+                <td class="col-km">120.37 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="[CH] 8ter Kurs. Day 2 (Completed)">[CH] 8ter Kurs. Day 2 (Completed)</td>
+                <td class="col-region" title="Italien, Schweiz">Italien, Schweiz</td>
+                <td class="col-km">125.21 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="[CH] 8ter Kurs mit Professor Moriarty. Day 3 (Completed)">[CH] 8ter Kurs mit Professor Moriarty. Day 3 (Completed)</td>
+                <td class="col-region" title="Schweiz">Schweiz</td>
+                <td class="col-km">74.5 km</td>
+                <td class="col-date">06.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">30.5 km</td>
+                <td class="col-date">07.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Afternoon Ride (Completed)">Afternoon Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">46.5 km</td>
+                <td class="col-date">07.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">56.47 km</td>
+                <td class="col-date">07.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">42.61 km</td>
+                <td class="col-date">07.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen, Rheinland-Pfalz">Hessen, Rheinland-Pfalz</td>
+                <td class="col-km">66.92 km</td>
+                <td class="col-date">07.2026</td>
+            </tr>
+            
+            <tr>
+                <td class="col-name" title="Evening Ride (Completed)">Evening Ride (Completed)</td>
+                <td class="col-region" title="Hessen">Hessen</td>
+                <td class="col-km">28.32 km</td>
+                <td class="col-date">07.2026</td>
             </tr>
             </tbody>
                 </table>
@@ -5206,45 +5577,29 @@
         </div>
 
         <script type="text/javascript">
-            // ECharts Init
+            // ECharts Initialisierung
             var chartDom = document.getElementById('graph-view');
             var myChart = echarts.init(chartDom);
-            var nodes = [{"id": "Hessen", "name": "Hessen", "symbolSize": 75.0, "value": 545, "category": 0}, {"id": "Spanien", "name": "Spanien", "symbolSize": 17.862385321100916, "value": 26, "category": 0}, {"id": "Niederlande", "name": "Niederlande", "symbolSize": 15.770642201834862, "value": 7, "category": 0}, {"id": "Frankreich", "name": "Frankreich", "symbolSize": 20.834862385321102, "value": 53, "category": 0}, {"id": "Rheinland-Pfalz", "name": "Rheinland-Pfalz", "symbolSize": 48.02752293577982, "value": 300, "category": 0}, {"id": "Baden-Wuerttemberg", "name": "Baden-Wuerttemberg", "symbolSize": 17.091743119266056, "value": 19, "category": 0}, {"id": "Berlin", "name": "Berlin", "symbolSize": 16.871559633027523, "value": 17, "category": 0}, {"id": "Brandenburg", "name": "Brandenburg", "symbolSize": 15.880733944954128, "value": 8, "category": 0}, {"id": "Sachsen", "name": "Sachsen", "symbolSize": 15.880733944954128, "value": 8, "category": 0}, {"id": "Tschechien", "name": "Tschechien", "symbolSize": 15.990825688073395, "value": 9, "category": 0}, {"id": "NRW", "name": "NRW", "symbolSize": 16.541284403669724, "value": 14, "category": 0}, {"id": "Niedersachsen", "name": "Niedersachsen", "symbolSize": 15.770642201834862, "value": 7, "category": 0}, {"id": "Bayern", "name": "Bayern", "symbolSize": 17.422018348623855, "value": 22, "category": 0}, {"id": "Italien", "name": "Italien", "symbolSize": 16.10091743119266, "value": 10, "category": 0}, {"id": "Schweiz", "name": "Schweiz", "symbolSize": 15.330275229357799, "value": 3, "category": 0}, {"id": "\u00d6sterreich", "name": "\u00d6sterreich", "symbolSize": 16.321100917431192, "value": 12, "category": 0}, {"id": "Th\u00fcringen", "name": "Th\u00fcringen", "symbolSize": 16.65137614678899, "value": 15, "category": 0}, {"id": "Sachsen-Anhalt", "name": "Sachsen-Anhalt", "symbolSize": 15.55045871559633, "value": 5, "category": 0}, {"id": "Hamburg", "name": "Hamburg", "symbolSize": 15.440366972477065, "value": 4, "category": 0}, {"id": "Belgien", "name": "Belgien", "symbolSize": 15.220183486238533, "value": 2, "category": 0}, {"id": "Luxemburg", "name": "Luxemburg", "symbolSize": 15.110091743119266, "value": 1, "category": 0}, {"id": "Saarland", "name": "Saarland", "symbolSize": 15.440366972477065, "value": 4, "category": 0}, {"id": "Andorra", "name": "Andorra", "symbolSize": 15.110091743119266, "value": 1, "category": 0}, {"id": "MeckPomm", "name": "MeckPomm", "symbolSize": 15.220183486238533, "value": 2, "category": 0}, {"id": "Schleswig-Holstein", "name": "Schleswig-Holstein", "symbolSize": 15.220183486238533, "value": 2, "category": 0}, {"id": "Polen", "name": "Polen", "symbolSize": 15.330275229357799, "value": 3, "category": 0}];
-            var links = [{"source": "Frankreich", "target": "Rheinland-Pfalz", "value": 17, "lineStyle": {"width": 5.6}}, {"source": "Baden-Wuerttemberg", "target": "Frankreich", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Baden-Wuerttemberg", "target": "Rheinland-Pfalz", "value": 10, "lineStyle": {"width": 3.5}}, {"source": "Hessen", "target": "Rheinland-Pfalz", "value": 252, "lineStyle": {"width": 76.1}}, {"source": "Berlin", "target": "Brandenburg", "value": 5, "lineStyle": {"width": 2.0}}, {"source": "Sachsen", "target": "Tschechien", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Brandenburg", "target": "Sachsen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Hessen", "target": "NRW", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "NRW", "target": "Rheinland-Pfalz", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Niedersachsen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Frankreich", "target": "Spanien", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Frankreich", "target": "Schweiz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Italien", "target": "\u00d6sterreich", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Hessen", "target": "Th\u00fcringen", "value": 12, "lineStyle": {"width": 4.1}}, {"source": "Bayern", "target": "\u00d6sterreich", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Hessen", "value": 8, "lineStyle": {"width": 2.9}}, {"source": "Frankreich", "target": "Hessen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Niedersachsen", "target": "Th\u00fcringen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Schweiz", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Bayern", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Bayern", "target": "Sachsen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Bayern", "target": "Tschechien", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Bayern", "target": "Hessen", "value": 9, "lineStyle": {"width": 3.1999999999999997}}, {"source": "Bayern", "target": "Th\u00fcringen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Sachsen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Sachsen", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Brandenburg", "target": "Hessen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Brandenburg", "target": "Sachsen-Anhalt", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Brandenburg", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Hessen", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Sachsen-Anhalt", "target": "Th\u00fcringen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Niedersachsen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Belgien", "target": "Frankreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Belgien", "target": "Luxemburg", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Belgien", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Belgien", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Frankreich", "target": "Luxemburg", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Frankreich", "target": "Saarland", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Luxemburg", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Luxemburg", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Rheinland-Pfalz", "target": "Saarland", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Belgien", "target": "NRW", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Belgien", "target": "Niederlande", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "NRW", "target": "Niederlande", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Niedersachsen", "target": "Sachsen-Anhalt", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Bayern", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Andorra", "target": "Frankreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Andorra", "target": "Spanien", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Baden-Wuerttemberg", "target": "\u00d6sterreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Schweiz", "target": "\u00d6sterreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Berlin", "target": "Hamburg", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Hamburg", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Niedersachsen", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Sachsen-Anhalt", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Polen", "target": "Tschechien", "value": 2, "lineStyle": {"width": 1.1}}];
+            var nodes = [{"id": "Hessen", "name": "Hessen", "symbolSize": 75.0, "value": 586, "category": 0}, {"id": "Spanien", "name": "Spanien", "symbolSize": 17.66211604095563, "value": 26, "category": 0}, {"id": "Niederlande", "name": "Niederlande", "symbolSize": 16.023890784982935, "value": 10, "category": 0}, {"id": "Belgien", "name": "Belgien", "symbolSize": 15.204778156996587, "value": 2, "category": 0}, {"id": "Frankreich", "name": "Frankreich", "symbolSize": 20.83617747440273, "value": 57, "category": 0}, {"id": "Rheinland-Pfalz", "name": "Rheinland-Pfalz", "symbolSize": 47.55972696245733, "value": 318, "category": 0}, {"id": "Baden-Wuerttemberg", "name": "Baden-Wuerttemberg", "symbolSize": 17.252559726962456, "value": 22, "category": 0}, {"id": "Berlin", "name": "Berlin", "symbolSize": 16.84300341296928, "value": 18, "category": 0}, {"id": "Brandenburg", "name": "Brandenburg", "symbolSize": 15.819112627986348, "value": 8, "category": 0}, {"id": "Sachsen", "name": "Sachsen", "symbolSize": 15.92150170648464, "value": 9, "category": 0}, {"id": "Tschechien", "name": "Tschechien", "symbolSize": 16.12627986348123, "value": 11, "category": 0}, {"id": "NRW", "name": "NRW", "symbolSize": 16.43344709897611, "value": 14, "category": 0}, {"id": "Niedersachsen", "name": "Niedersachsen", "symbolSize": 15.716723549488055, "value": 7, "category": 0}, {"id": "Bayern", "name": "Bayern", "symbolSize": 17.55972696245734, "value": 25, "category": 0}, {"id": "Italien", "name": "Italien", "symbolSize": 16.22866894197952, "value": 12, "category": 0}, {"id": "Schweiz", "name": "Schweiz", "symbolSize": 15.716723549488055, "value": 7, "category": 0}, {"id": "\u00d6sterreich", "name": "\u00d6sterreich", "symbolSize": 16.22866894197952, "value": 12, "category": 0}, {"id": "Th\u00fcringen", "name": "Th\u00fcringen", "symbolSize": 16.5358361774744, "value": 15, "category": 0}, {"id": "Sachsen-Anhalt", "name": "Sachsen-Anhalt", "symbolSize": 15.511945392491468, "value": 5, "category": 0}, {"id": "Hamburg", "name": "Hamburg", "symbolSize": 15.409556313993175, "value": 4, "category": 0}, {"id": "Luxemburg", "name": "Luxemburg", "symbolSize": 15.102389078498293, "value": 1, "category": 0}, {"id": "Saarland", "name": "Saarland", "symbolSize": 15.409556313993175, "value": 4, "category": 0}, {"id": "Andorra", "name": "Andorra", "symbolSize": 15.102389078498293, "value": 1, "category": 0}, {"id": "MeckPomm", "name": "MeckPomm", "symbolSize": 15.204778156996587, "value": 2, "category": 0}, {"id": "Schleswig-Holstein", "name": "Schleswig-Holstein", "symbolSize": 15.204778156996587, "value": 2, "category": 0}, {"id": "Polen", "name": "Polen", "symbolSize": 15.30716723549488, "value": 3, "category": 0}];
+            var links = [{"source": "Belgien", "target": "Niederlande", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Frankreich", "target": "Rheinland-Pfalz", "value": 18, "lineStyle": {"width": 5.8999999999999995}}, {"source": "Baden-Wuerttemberg", "target": "Frankreich", "value": 7, "lineStyle": {"width": 2.6}}, {"source": "Baden-Wuerttemberg", "target": "Rheinland-Pfalz", "value": 12, "lineStyle": {"width": 4.1}}, {"source": "Hessen", "target": "Rheinland-Pfalz", "value": 266, "lineStyle": {"width": 80.3}}, {"source": "Berlin", "target": "Brandenburg", "value": 7, "lineStyle": {"width": 2.6}}, {"source": "Sachsen", "target": "Tschechien", "value": 7, "lineStyle": {"width": 2.6}}, {"source": "Hessen", "target": "NRW", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "NRW", "target": "Rheinland-Pfalz", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Niedersachsen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Frankreich", "target": "Spanien", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Frankreich", "target": "Schweiz", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Italien", "target": "\u00d6sterreich", "value": 6, "lineStyle": {"width": 2.3}}, {"source": "Hessen", "target": "Th\u00fcringen", "value": 12, "lineStyle": {"width": 4.1}}, {"source": "Bayern", "target": "\u00d6sterreich", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Hessen", "value": 10, "lineStyle": {"width": 3.5}}, {"source": "Frankreich", "target": "Hessen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Niedersachsen", "target": "Th\u00fcringen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Schweiz", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Baden-Wuerttemberg", "target": "Bayern", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Bayern", "target": "Sachsen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Bayern", "target": "Tschechien", "value": 5, "lineStyle": {"width": 2.0}}, {"source": "Bayern", "target": "Hessen", "value": 10, "lineStyle": {"width": 3.5}}, {"source": "Bayern", "target": "Th\u00fcringen", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Sachsen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Sachsen", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Berlin", "target": "Hessen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Berlin", "target": "Sachsen-Anhalt", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Berlin", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Brandenburg", "target": "Hessen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Brandenburg", "target": "Sachsen-Anhalt", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Brandenburg", "target": "Th\u00fcringen", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Hessen", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Sachsen-Anhalt", "target": "Th\u00fcringen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Niedersachsen", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Frankreich", "target": "Luxemburg", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Frankreich", "target": "Saarland", "value": 3, "lineStyle": {"width": 1.4}}, {"source": "Luxemburg", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Luxemburg", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Rheinland-Pfalz", "target": "Saarland", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Belgien", "target": "NRW", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "NRW", "target": "Niederlande", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Niedersachsen", "target": "Sachsen-Anhalt", "value": 4, "lineStyle": {"width": 1.7}}, {"source": "Hessen", "target": "Saarland", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Bayern", "target": "Rheinland-Pfalz", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Andorra", "target": "Frankreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Andorra", "target": "Spanien", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Baden-Wuerttemberg", "target": "\u00d6sterreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Schweiz", "target": "\u00d6sterreich", "value": 1, "lineStyle": {"width": 0.8}}, {"source": "Berlin", "target": "Hamburg", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Berlin", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Hamburg", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Brandenburg", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "MeckPomm", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Hamburg", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Niedersachsen", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Sachsen-Anhalt", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "MeckPomm", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Niedersachsen", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Sachsen-Anhalt", "target": "Schleswig-Holstein", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Polen", "target": "Tschechien", "value": 2, "lineStyle": {"width": 1.1}}, {"source": "Italien", "target": "Schweiz", "value": 2, "lineStyle": {"width": 1.1}}];
+
             var option = {
                 backgroundColor: '#fcfcfc',
                 tooltip: {},
-                series: [{
-                    type: 'graph', layout: 'force', data: nodes, links: links, roam: true, draggable: true,
-                    label: { show: true, position: 'right', formatter: '{b}', color: '#333', fontSize: 11 },
-                    itemStyle: { color: '#ff3300', shadowBlur: 0, borderColor: '#fff', borderWidth: 1 },
-                    lineStyle: { color: '#ccc', curveness: 0.1, width: 1 },
-                    force: { repulsion: 350, gravity: 0.1, edgeLength: 50, layoutAnimation: true }
-                }]
+                series: [
+                    {
+                        type: 'graph', layout: 'force', data: nodes, links: links, roam: true, draggable: true,
+                        label: { show: true, position: 'right', formatter: '{b}', color: '#333', fontSize: 11, fontFamily: 'sans-serif' },
+                        itemStyle: { color: '#ff3300', shadowBlur: 0, borderColor: '#fff', borderWidth: 1 },
+                        lineStyle: { color: '#ccc', curveness: 0.1, width: 1 },
+                        force: { repulsion: 350, gravity: 0.1, edgeLength: 50, layoutAnimation: true }
+                    }
+                ]
             };
+
             myChart.setOption(option);
 
-            // --- BLUR ENTFERNEN ---
-            // Wir hören auf Events direkt auf dem Overlay-Div.
-            const blurOverlay = document.getElementById('map-blur-overlay');
-
-            function removeBlur() {
-                if (!blurOverlay.classList.contains('hidden')) {
-                    blurOverlay.classList.add('hidden');
-                    // Nach Ausblenden Overlay "unsichtbar" für Maus machen
-                    setTimeout(() => {
-                        blurOverlay.style.display = 'none';
-                    }, 1000); 
-                }
-            }
-
-            // Events, die den Blur entfernen (Maus, Touch, Scroll)
-            blurOverlay.addEventListener('mousedown', removeBlur);
-            blurOverlay.addEventListener('touchstart', removeBlur);
-            blurOverlay.addEventListener('wheel', removeBlur);
-            blurOverlay.addEventListener('click', removeBlur);
-
-            // --- UI LOGIK ---
+            // Leaflet Karte neu berechnen (da im IFrame)
             function resizeMap() {
                 const iframe = document.querySelector('#map-container iframe');
                 if (iframe && iframe.contentWindow && iframe.contentWindow.map && iframe.contentWindow.map.invalidateSize) {
@@ -5252,6 +5607,7 @@
                 }
             }
 
+            // Umschalten zwischen Logbuch und Kosmos
             function switchView(view) {
                 var listDiv = document.getElementById('list-view');
                 var graphDiv = document.getElementById('graph-view');
@@ -5269,9 +5625,11 @@
                 }
             }
 
+            // Layout umschalten (Karte groß <-> Inhalt groß)
             function toggleMaximize() {
                 const body = document.body;
                 const icon = document.getElementById('toggle-icon');
+
                 if (body.classList.contains('map-maximized')) {
                     body.classList.remove('map-maximized');
                     body.classList.add('content-maximized');
@@ -5281,11 +5639,16 @@
                     body.classList.add('map-maximized');
                     icon.innerHTML = '▼'; 
                 }
-                setTimeout(() => { myChart.resize(); resizeMap(); }, 300);
+
+                setTimeout(() => {
+                    myChart.resize();
+                    resizeMap();
+                }, 300);
             }
 
             window.addEventListener('resize', function() { myChart.resize(); resizeMap(); });
             
+            // Start-Icon setzen
             window.onload = function() {
                 document.getElementById('toggle-icon').innerHTML = '▼';
                 resizeMap();
