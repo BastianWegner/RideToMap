@@ -87,7 +87,7 @@ def inject_multiply_style():
 
             function updateHeatZoom() {{
                 const zoom = heatMap.getZoom();
-                document.body.classList.remove(...zoomClasses);
+                document.body.classList.remove.apply(document.body.classList, zoomClasses);
                 document.body.classList.add(
                     zoom <= 7
                         ? "heat-zoom-far"
@@ -107,7 +107,7 @@ def inject_multiply_style():
                         }}
                     }}
                 }});
-                document.body.classList.remove(...baseClasses);
+                document.body.classList.remove.apply(document.body.classList, baseClasses);
                 document.body.classList.add(isDark ? "heat-base-dark" : "heat-base-light");
             }}
 

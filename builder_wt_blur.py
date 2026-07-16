@@ -396,13 +396,9 @@ def main():
             body.content-maximized #content-area {{ flex: 1 1 auto; height: auto; min-height: 0; border-top: 1px solid #e0e0e0; }}
             
             /* Allgemeines Layout */
-            html {{ margin: 0; padding: 0; height: 100%; height: -webkit-fill-available; }}
+            html, body {{ margin: 0; padding: 0; height: 100%; }}
             body {{
-                margin: 0;
-                padding: 0;
-                min-height: 100%;
-                min-height: 100dvh;
-                min-height: -webkit-fill-available;
+                height: 100dvh;
                 max-height: 100dvh;
                 display: flex;
                 flex-direction: column;
@@ -412,10 +408,10 @@ def main():
                 color: #333;
             }}
             
-            #map-container {{ flex: 1 1 auto; width: 100%; min-height: 0; border-bottom: 1px solid #e0e0e0; box-sizing: border-box; }}
+            #map-container {{ flex: 1 1 auto; width: 100%; min-height: 0; border-bottom: 1px solid #e0e0e0; }}
             iframe {{ width: 100%; height: 100%; border: none; display: block; }}
             
-            /* Steuerleiste — fixed when map is maximized so mobile browser chrome cannot clip it */
+            /* Steuerleiste */
             #control-bar {{
                 flex: 0 0 auto;
                 height: 48px;
@@ -426,20 +422,9 @@ def main():
                 align-items: center;
                 padding: 0 15px;
                 gap: 15px;
-                z-index: 1000;
-                box-sizing: border-box;
-            }}
-            body.map-maximized #control-bar {{
-                position: fixed;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                height: calc(48px + env(safe-area-inset-bottom, 0px));
+                z-index: 20;
                 padding-bottom: env(safe-area-inset-bottom, 0px);
-                border-top: 1px solid #e0e0e0;
-            }}
-            body.map-maximized #map-container {{
-                padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+                box-sizing: border-box;
             }}
             
             /* Toggle Button (Pfeil) */
