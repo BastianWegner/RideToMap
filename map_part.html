@@ -53,24 +53,24 @@
 
     
     <style id="ride-to-map-heat-style">
-        /* Light map: multiply for heat stacking. Dark map: screen so lines stay orange. */
+        /* No multiply: on mobile it turns orange tracks black over dark tiles. */
         body.heat-base-light .leaflet-overlay-pane svg path {
-            mix-blend-mode: multiply;
+            mix-blend-mode: normal;
         }
         body.heat-base-dark .leaflet-overlay-pane svg path {
             mix-blend-mode: screen;
         }
         body.heat-zoom-far .leaflet-overlay-pane svg path {
-            stroke-width: 1.2px !important;
-            stroke-opacity: 0.12 !important;
+            stroke-width: 1.4px !important;
+            stroke-opacity: 0.22 !important;
         }
         body.heat-zoom-medium .leaflet-overlay-pane svg path {
-            stroke-width: 1.6px !important;
-            stroke-opacity: 0.2 !important;
+            stroke-width: 1.8px !important;
+            stroke-opacity: 0.32 !important;
         }
         body.heat-zoom-near .leaflet-overlay-pane svg path {
-            stroke-width: 2px !important;
-            stroke-opacity: 0.3 !important;
+            stroke-width: 2.2px !important;
+            stroke-opacity: 0.42 !important;
         }
     </style>
 
@@ -148,7 +148,7 @@
     
             poly_line_6b043fe8a52512e364baa44c7b39754e.bindTooltip(
                 `<div>
-                     11.2020: #Bike-Loft Advent[ure]kalender °1 (Completed)
+                     11.2020: #Bike-Loft Advent[ure]kalender ┬░1 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -164,7 +164,7 @@
     
             poly_line_fad5791aca07cd5aecf588a44280605b.bindTooltip(
                 `<div>
-                     12.2020: #Bike-Loft Advent[ure]kalender °2 (Completed)
+                     12.2020: #Bike-Loft Advent[ure]kalender ┬░2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -340,7 +340,7 @@
     
             poly_line_0748a3f2ea9a6697ce3bc2c9c1f16759.bindTooltip(
                 `<div>
-                     11.2020: #Sonne 🔆 (Completed)
+                     11.2020: #Sonne ­ƒöå (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -404,7 +404,7 @@
     
             poly_line_f41894520460fb5d75d930933e06b625.bindTooltip(
                 `<div>
-                     08.2023: 16 PEAKS No. 10 - Baden-Württemberg. (Completed)
+                     08.2023: 16 PEAKS No. 10 - Baden-W├╝rttemberg. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -420,7 +420,7 @@
     
             poly_line_8d18f25a14114c847a8f1fd9e7b8aa3c.bindTooltip(
                 `<div>
-                     04.2025: 16 PEAKS No. 11 - Sachsen. [tři] (Completed)
+                     04.2025: 16 PEAKS No. 11 - Sachsen. [t┼Öi] (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -436,7 +436,7 @@
     
             poly_line_b2f3dfb6353bc07523354944c2ae8a06.bindTooltip(
                 `<div>
-                     04.2025: 16 PEAKS No. 12 - Brandenburg. [čtyři] (Completed)
+                     04.2025: 16 PEAKS No. 12 - Brandenburg. [─ìty┼Öi] (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -516,7 +516,7 @@
     
             poly_line_42c96d1a6e897f2a4302972faaaf650e.bindTooltip(
                 `<div>
-                     06.2020: 2700km² umrunden  - das Gießener Becken (Completed)
+                     06.2020: 2700km┬▓ umrunden  - das Gie├ƒener Becken (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -532,7 +532,7 @@
     
             poly_line_c1de0d06c52122ab6bd52a7ab2f9fd11.bindTooltip(
                 `<div>
-                     06.2020: 2700km² umrunden  - das Rheingaugebirge (Completed)
+                     06.2020: 2700km┬▓ umrunden  - das Rheingaugebirge (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -548,7 +548,7 @@
     
             poly_line_ca99d34e134cb72d08189ac91895ac1d.bindTooltip(
                 `<div>
-                     06.2020: 2700km² umrunden  - die Idsteiner Senke (Completed)
+                     06.2020: 2700km┬▓ umrunden  - die Idsteiner Senke (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -564,7 +564,7 @@
     
             poly_line_4beb9d664b387499d684a578431d7bbf.bindTooltip(
                 `<div>
-                     06.2020: 2700km² umrunden  - die Lahn (Completed)
+                     06.2020: 2700km┬▓ umrunden  - die Lahn (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -628,7 +628,7 @@
     
             poly_line_d2765159315cd4cd55206017d7239c4b.bindTooltip(
                 `<div>
-                     11.2020: 591,8 m ü. NHN (Completed)
+                     11.2020: 591,8┬ám┬á├╝.┬áNHN (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2068,7 +2068,7 @@
     
             poly_line_315ba765e70d276a0435e0ce323651d7.bindTooltip(
                 `<div>
-                     07.2023: Against the trend. [ Col de Portet-d'Aspet  ⛰️⛰️⛰️ ] (Completed)
+                     07.2023: Against the trend. [ Col de Portet-d'Aspet  Ôø░´©ÅÔø░´©ÅÔø░´©Å ] (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2084,7 +2084,7 @@
     
             poly_line_be65b845df1d44d75058ca292134c921.bindTooltip(
                 `<div>
-                     07.2020: Albrecht-Route Mixed Terrain - Bikepacking ⏱️6 (Completed)
+                     07.2020: Albrecht-Route Mixed Terrain - Bikepacking ÔÅ▒´©Å6 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2164,7 +2164,7 @@
     
             poly_line_70c74006051b2e8ca1819f25e49684f8.bindTooltip(
                 `<div>
-                     07.2023: Alpenbundesstraße👎 (Completed)
+                     07.2023: Alpenbundesstra├ƒe­ƒæÄ (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2276,7 +2276,7 @@
     
             poly_line_a40a1e0f8d1b9fe89aa1c8db92e3be42.bindTooltip(
                 `<div>
-                     07.2020: Am See 🤦‍♂️- Bikepacking ⏱️3.1 (Completed)
+                     07.2020: Am See ­ƒñªÔÇìÔÖé´©Å- Bikepacking ÔÅ▒´©Å3.1 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2372,7 +2372,7 @@
     
             poly_line_80fc7b93f794bb3f4c688a7bb8c00dde.bindTooltip(
                 `<div>
-                     07.2020: Arlbergpass & alte Reschenstraẞe - Bikepacking ⏱️4 (Completed)
+                     07.2020: Arlbergpass & alte Reschenstraß║×e - Bikepacking ÔÅ▒´©Å4 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2420,7 +2420,7 @@
     
             poly_line_c698625bef9ed1ee8a7286ef7a3db333.bindTooltip(
                 `<div>
-                     07.2020: Auf nach Hause - Bikepacking ⏱️9 (Completed)
+                     07.2020: Auf nach Hause - Bikepacking ÔÅ▒´©Å9 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2436,7 +2436,7 @@
     
             poly_line_f4bd45c03629dca3f33addf2030a4a71.bindTooltip(
                 `<div>
-                     07.2020: Auf zur Grenze - Bikepacking ⏱️0 (Completed)
+                     07.2020: Auf zur Grenze - Bikepacking ÔÅ▒´©Å0 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2804,7 +2804,7 @@
     
             poly_line_c7d9a2c17521f38892be6fa0807b7064.bindTooltip(
                 `<div>
-                     07.2024: Boot und zurück (Completed)
+                     07.2024: Boot und zur├╝ck (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2868,7 +2868,7 @@
     
             poly_line_7ec7e0758d9e8dad3b468d00e33061ce.bindTooltip(
                 `<div>
-                     02.2020: Brücke zu Brücke - Zerhackstückelt 1/2 (Completed)
+                     02.2020: Br├╝cke zu Br├╝cke - Zerhackst├╝ckelt 1/2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2884,7 +2884,7 @@
     
             poly_line_d965b13e13c9aad44324314f7f7ce89f.bindTooltip(
                 `<div>
-                     02.2020: Brücke zu Brücke - Zerhackstückelt 2/2 (Completed)
+                     02.2020: Br├╝cke zu Br├╝cke - Zerhackst├╝ckelt 2/2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -2900,7 +2900,7 @@
     
             poly_line_6cfa3f1c3e4ee0e8d526fa21fb4ebf12.bindTooltip(
                 `<div>
-                     02.2020: Brücke zu Brücke - Zerhackstückelt 2/2 (Completed)
+                     02.2020: Br├╝cke zu Br├╝cke - Zerhackst├╝ckelt 2/2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -3028,7 +3028,7 @@
     
             poly_line_3a7a0833b418515a4435414f2d4cbb3e.bindTooltip(
                 `<div>
-                     02.2024: CALA TUENT #DIESCHÖNE (Completed)
+                     02.2024: CALA TUENT #DIESCH├ûNE (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -3236,7 +3236,7 @@
     
             poly_line_227aa654ef7d01ff2096741cdfedaae2.bindTooltip(
                 `<div>
-                     08.2021: Crêtes. ⛰️ (Completed)
+                     08.2021: Cr├¬tes. Ôø░´©Å (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -3620,7 +3620,7 @@
     
             poly_line_3297847f1660196a8b0bc8aaeaee8fdd.bindTooltip(
                 `<div>
-                     11.2020: Der frühe Vogel versteckt den Wurm. #Bike-Loft Advent[ure]kalender (Completed)
+                     11.2020: Der fr├╝he Vogel versteckt den Wurm. #Bike-Loft Advent[ure]kalender (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -3668,7 +3668,7 @@
     
             poly_line_fdfe4c25e2abc7aeee39aece50d7d021.bindTooltip(
                 `<div>
-                     02.2020: Die Grenze ist offen mit Rückenwind. (Completed)
+                     02.2020: Die Grenze ist offen mit R├╝ckenwind. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -3780,7 +3780,7 @@
     
             poly_line_b1de6c9e2cc8f394fd79c01d13c679dc.bindTooltip(
                 `<div>
-                     07.2020: Dolomiten Luft schnuppern - Bikepacking ⏱️8 (Completed)
+                     07.2020: Dolomiten Luft schnuppern - Bikepacking ÔÅ▒´©Å8 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -3844,7 +3844,7 @@
     
             poly_line_4a7a6073a171229f219285a3a13c43e0.bindTooltip(
                 `<div>
-                     01.2023: Draußen aktiv. (Completed)
+                     01.2023: Drau├ƒen aktiv. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -3860,7 +3860,7 @@
     
             poly_line_33da10372bfb8fed90df9c31209b93e6.bindTooltip(
                 `<div>
-                     09.2020: Dörfer zählen. (Completed)
+                     09.2020: D├Ârfer z├ñhlen. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -4004,7 +4004,7 @@
     
             poly_line_7dd1d72226aa604b3ed5514137f80b8a.bindTooltip(
                 `<div>
-                     12.2020: Eins, zwei, drei, vier Eckstein, alles muss versteckt sein. #Bike-Loft Adventurekalender °4 (Completed)
+                     12.2020: Eins, zwei, drei, vier Eckstein, alles muss versteckt sein. #Bike-Loft Adventurekalender ┬░4 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -4052,7 +4052,7 @@
     
             poly_line_618e8160c960b56b3a2321487ec66cb7.bindTooltip(
                 `<div>
-                     05.2021: Einstellfahrt, neues Handy. 📸 (Completed)
+                     05.2021: Einstellfahrt, neues Handy. ­ƒô© (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -4116,7 +4116,7 @@
     
             poly_line_2f1b14608323a3f6ba59bc91f94991f8.bindTooltip(
                 `<div>
-                     07.2020: Elsass, Vogesen-Rush - Bikepacking ⏱️1 (Completed)
+                     07.2020: Elsass, Vogesen-Rush - Bikepacking ÔÅ▒´©Å1 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6244,7 +6244,7 @@
     
             poly_line_0f411c799efc45ef5746ae851727fcd8.bindTooltip(
                 `<div>
-                     06.2025: Feldbergkönig (Completed)
+                     06.2025: Feldbergk├Ânig (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6308,7 +6308,7 @@
     
             poly_line_cd7bd655bbb40a2eea2754d62a64efef.bindTooltip(
                 `<div>
-                     12.2021: FESTIVE500 und Geschenke auspacken 🎄🎁 (Completed)
+                     12.2021: FESTIVE500 und Geschenke auspacken ­ƒÄä­ƒÄü (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6356,7 +6356,7 @@
     
             poly_line_88209e7d5ece71d71bda589650fd6c68.bindTooltip(
                 `<div>
-                     12.2021: FESTIVE500 und Weihnachtsfrühstück (Completed)
+                     12.2021: FESTIVE500 und Weihnachtsfr├╝hst├╝ck (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6436,7 +6436,7 @@
     
             poly_line_56b13a597dc3dddb96d65f537bf570f1.bindTooltip(
                 `<div>
-                     08.2021: forêt. (Completed)
+                     08.2021: for├¬t. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6452,7 +6452,7 @@
     
             poly_line_ca957918bf60b0d0be2cfec399aa9955.bindTooltip(
                 `<div>
-                     09.2024: FR: Septembre deux 🍇🚜🌽🌻🌤🍎🍁 (Completed)
+                     09.2024: FR: Septembre deux ­ƒìç­ƒÜ£­ƒî¢­ƒî╗­ƒîñ­ƒìÄ­ƒìü (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6468,7 +6468,7 @@
     
             poly_line_1af17d1698fc5926c0c69cdd08c1cc73.bindTooltip(
                 `<div>
-                     09.2024: FR: Septembre trois 🍇🚜🌽🌻🌤🍎🍁 (Completed)
+                     09.2024: FR: Septembre trois ­ƒìç­ƒÜ£­ƒî¢­ƒî╗­ƒîñ­ƒìÄ­ƒìü (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6484,7 +6484,7 @@
     
             poly_line_234bc86f05003a3e0801efd19f75a384.bindTooltip(
                 `<div>
-                     09.2024: FR: Septembre un 🍇🚜🌽🌻🌤🍎🍁 (Completed)
+                     09.2024: FR: Septembre un ­ƒìç­ƒÜ£­ƒî¢­ƒî╗­ƒîñ­ƒìÄ­ƒìü (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6532,7 +6532,7 @@
     
             poly_line_2b5d49a811359052dc85eda8b60380e1.bindTooltip(
                 `<div>
-                     04.2020: Fulda Gap - 400er Runde Nr.1 [Check] ✓ (Completed)
+                     04.2020: Fulda Gap - 400er Runde Nr.1 [Check] Ô£ô (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6548,7 +6548,7 @@
     
             poly_line_015a709ff2239e3f845db75549171f9e.bindTooltip(
                 `<div>
-                     04.2020: Fulda Gap - 400er Runde Nr.1 [Check] ✓ (Completed)
+                     04.2020: Fulda Gap - 400er Runde Nr.1 [Check] Ô£ô (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6564,7 +6564,7 @@
     
             poly_line_f2b9a2a4185eaad5e9cfee566c8a016b.bindTooltip(
                 `<div>
-                     12.2020: Fünfhundertsechzehn #Festive500 (Completed)
+                     12.2020: F├╝nfhundertsechzehn #Festive500 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6580,7 +6580,7 @@
     
             poly_line_76bf5b4683425eefbf11f3d85150c1cc.bindTooltip(
                 `<div>
-                     05.2023: für verloren gehalten, t-minus 6. (Completed)
+                     05.2023: f├╝r verloren gehalten, t-minus 6. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6596,7 +6596,7 @@
     
             poly_line_5391f50ef343d5d5ebdd0cf14ced941e.bindTooltip(
                 `<div>
-                     01.2022: Ganz entspannt - das ist sooo schön. 1v2 (Completed)
+                     01.2022: Ganz entspannt - das ist sooo sch├Ân. 1v2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6612,7 +6612,7 @@
     
             poly_line_654289236588d39eacf551b7766e3d8e.bindTooltip(
                 `<div>
-                     01.2022: Ganz entspannt - das ist sooo schön. 2v2 (Completed)
+                     01.2022: Ganz entspannt - das ist sooo sch├Ân. 2v2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6660,7 +6660,7 @@
     
             poly_line_e39c47f50bb16c0be35a0b6e861479fa.bindTooltip(
                 `<div>
-                     07.2020: Gavia, Tonale, Mendelpass - Bikepacking ⏱️7 (Completed)
+                     07.2020: Gavia, Tonale, Mendelpass - Bikepacking ÔÅ▒´©Å7 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6804,7 +6804,7 @@
     
             poly_line_a128a6f862fdf889a61aad51cf561c86.bindTooltip(
                 `<div>
-                     07.2023: Glutofen. [ Timmelsjoch ⛰️ ] (Completed)
+                     07.2023: Glutofen. [ Timmelsjoch Ôø░´©Å ] (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6916,7 +6916,7 @@
     
             poly_line_22e5cbbf5b5e8042d0aa7ac6f435fbe9.bindTooltip(
                 `<div>
-                     03.2022: Großes Kino. (Completed)
+                     03.2022: Gro├ƒes Kino. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6948,7 +6948,7 @@
     
             poly_line_213196ccddc790d7eb427d35b4a590d7.bindTooltip(
                 `<div>
-                     06.2024: GST - Grundsätzlich Steile Täler _0.5 🚣‍♀ (Completed)
+                     06.2024: GST - Grunds├ñtzlich Steile T├ñler _0.5 ­ƒÜúÔÇìÔÖÇ (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6964,7 +6964,7 @@
     
             poly_line_8595a229f31635fc886de2219f09a4f8.bindTooltip(
                 `<div>
-                     06.2024: GST - Grundsätzlich Steile Täler _1 🌫️ (Completed)
+                     06.2024: GST - Grunds├ñtzlich Steile T├ñler _1 ­ƒî½´©Å (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -6980,7 +6980,7 @@
     
             poly_line_2d31d58f8a3ef1081e90116427154031.bindTooltip(
                 `<div>
-                     06.2024: GST - Grundsätzlich Steile Täler _1.5 🛤️ (Completed)
+                     06.2024: GST - Grunds├ñtzlich Steile T├ñler _1.5 ­ƒøñ´©Å (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7028,7 +7028,7 @@
     
             poly_line_9fa038cd0d874108a475965d4de5e2c3.bindTooltip(
                 `<div>
-                     02.2021: Hardtail (ausversehen gelöscht) (Completed)
+                     02.2021: Hardtail (ausversehen gel├Âscht) (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7076,7 +7076,7 @@
     
             poly_line_b28fdceb4c94e808a9d64292bc3f262d.bindTooltip(
                 `<div>
-                     05.2022: HEINZELMÄNNCHENTRAILS. (Completed)
+                     05.2022: HEINZELM├äNNCHENTRAILS. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7268,7 +7268,7 @@
     
             poly_line_3a42dee0d6700de46e55d2b01bfa8c03.bindTooltip(
                 `<div>
-                     04.2021: Hundertfünfzig (Completed)
+                     04.2021: Hundertf├╝nfzig (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7284,7 +7284,7 @@
     
             poly_line_aa1938c9fb3d97d487c895fcc70e9b7e.bindTooltip(
                 `<div>
-                     03.2021: Höhenmeter Training (Completed)
+                     03.2021: H├Âhenmeter Training (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7332,7 +7332,7 @@
     
             poly_line_64adfed82c8a85be2dcef13c42d254d0.bindTooltip(
                 `<div>
-                     05.2021: In der Dialektzone - sächsisch. (Completed)
+                     05.2021: In der Dialektzone - s├ñchsisch. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7412,7 +7412,7 @@
     
             poly_line_6f8676c07c800e1039c997d35c256272.bindTooltip(
                 `<div>
-                     11.2021: Jagdhütte (Completed)
+                     11.2021: Jagdh├╝tte (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7476,7 +7476,7 @@
     
             poly_line_97977aca21d7cbdc1aa8542b1561135a.bindTooltip(
                 `<div>
-                     08.2021: KAFFEEFAHRT. ☕ (Completed)
+                     08.2021: KAFFEEFAHRT. Ôÿò (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7540,7 +7540,7 @@
     
             poly_line_ac888e86c7f2a3b12d3df850dade1d08.bindTooltip(
                 `<div>
-                     11.2021: Kartoffel-Lauch-Schafskäse (Completed)
+                     11.2021: Kartoffel-Lauch-Schafsk├ñse (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7556,7 +7556,7 @@
     
             poly_line_0e684e8c6cb5c2a4ff2cc6f48da8187b.bindTooltip(
                 `<div>
-                     08.2022: Kaub Adolfstraße. 🪜 (Completed)
+                     08.2022: Kaub Adolfstra├ƒe. ­ƒ¬£ (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7572,7 +7572,7 @@
     
             poly_line_30e446fc5bcea2ae672486dde0e96510.bindTooltip(
                 `<div>
-                     06.2020: Kein Weg ist zu weit für ein Egelosia Eis (Completed)
+                     06.2020: Kein Weg ist zu weit f├╝r ein Egelosia Eis (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7604,7 +7604,7 @@
     
             poly_line_7fa272cb711898d28f7aed9079555fe4.bindTooltip(
                 `<div>
-                     07.2020: Klassiker im Abendrot, äh zum Abendbrot. (Completed)
+                     07.2020: Klassiker im Abendrot, ├ñh zum Abendbrot. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7620,7 +7620,7 @@
     
             poly_line_5e1927039f8ec2c29feba21e486fa474.bindTooltip(
                 `<div>
-                     07.2020: Klassiker im Abendrot, äh zum Abendbrot. (Completed)
+                     07.2020: Klassiker im Abendrot, ├ñh zum Abendbrot. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7700,7 +7700,7 @@
     
             poly_line_e6980a53ce400b345b12c5d1cecf9825.bindTooltip(
                 `<div>
-                     07.2021: kleines Ritzel, großes Schnitzel. (Completed)
+                     07.2021: kleines Ritzel, gro├ƒes Schnitzel. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7796,7 +7796,7 @@
     
             poly_line_4455530bdee7b46b604e692b39d58ae9.bindTooltip(
                 `<div>
-                     06.2023: L'Ilet aux 2 étangs. (Completed)
+                     06.2023: L'Ilet aux 2 ├®tangs. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7940,7 +7940,7 @@
     
             poly_line_b0a563425046a402910943fc524666da.bindTooltip(
                 `<div>
-                     12.2020: Late, but not too late #Bike-Loft Adventurekalender °3 (Completed)
+                     12.2020: Late, but not too late #Bike-Loft Adventurekalender ┬░3 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7956,7 +7956,7 @@
     
             poly_line_9b4f2ff84539dd9c878958c5d08e0cf9.bindTooltip(
                 `<div>
-                     04.2021: Lauschhütte mit leeren Magen (Completed)
+                     04.2021: Lauschh├╝tte mit leeren Magen (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7972,7 +7972,7 @@
     
             poly_line_5e5f0e50671d7d7b33419b9cab0aeef5.bindTooltip(
                 `<div>
-                     12.2021: Letzter Ride des Jahres und f̶̶e̶̶s̶̶t̶̶i̶̶v̶̶e̶̶5̶̶0̶̶0̶ (Completed)
+                     12.2021: Letzter Ride des Jahres und f╠Â╠Âe╠Â╠Âs╠Â╠Ât╠Â╠Âi╠Â╠Âv╠Â╠Âe╠Â╠Â5╠Â╠Â0╠Â╠Â0╠Â (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -7988,7 +7988,7 @@
     
             poly_line_bcbc6d2c0b3cb68c84997e51035c688e.bindTooltip(
                 `<div>
-                     12.2021: Letzter Ride des Jahres und f̶̶e̶̶s̶̶t̶̶i̶̶v̶̶e̶̶5̶̶0̶̶0̶ (Completed)
+                     12.2021: Letzter Ride des Jahres und f╠Â╠Âe╠Â╠Âs╠Â╠Ât╠Â╠Âi╠Â╠Âv╠Â╠Âe╠Â╠Â5╠Â╠Â0╠Â╠Â0╠Â (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -8004,7 +8004,7 @@
     
             poly_line_06eabf42a082b090d3f28f892b218253.bindTooltip(
                 `<div>
-                     12.2021: Letzter Ride des Jahres und f̶̶e̶̶s̶̶t̶̶i̶̶v̶̶e̶̶5̶̶0̶̶0̶ (Completed)
+                     12.2021: Letzter Ride des Jahres und f╠Â╠Âe╠Â╠Âs╠Â╠Ât╠Â╠Âi╠Â╠Âv╠Â╠Âe╠Â╠Â5╠Â╠Â0╠Â╠Â0╠Â (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -8036,7 +8036,7 @@
     
             poly_line_4bd394c90b3935668ac7073309e201b0.bindTooltip(
                 `<div>
-                     12.2022: Lärmfeuer. (Completed)
+                     12.2022: L├ñrmfeuer. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -8084,7 +8084,7 @@
     
             poly_line_4d2e6a06b6a20410fd4ba3bb39b9005f.bindTooltip(
                 `<div>
-                     07.2023: Massif central. [ Puy Mary ⛰️⛰️ ] (Completed)
+                     07.2023: Massif central. [ Puy Mary Ôø░´©ÅÔø░´©Å ] (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -8132,7 +8132,7 @@
     
             poly_line_78574f2a3060787869cc86ca12f735e0.bindTooltip(
                 `<div>
-                     12.2020: Mein Schatzzz. #Bike-Loft Adventurekalender n°2 (Completed)
+                     12.2020: Mein Schatzzz. #Bike-Loft Adventurekalender n┬░2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -9220,7 +9220,7 @@
     
             poly_line_f9f9433621bee15da69d67ab622c089f.bindTooltip(
                 `<div>
-                     04.2021: MTB Ründche (Completed)
+                     04.2021: MTB R├╝ndche (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -9268,7 +9268,7 @@
     
             poly_line_3be099c14e277390870f5ac9ca435317.bindTooltip(
                 `<div>
-                     12.2020: Mühevollste Schatzsuche 2020 im Rheingau (Completed)
+                     12.2020: M├╝hevollste Schatzsuche 2020 im Rheingau (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -9492,7 +9492,7 @@
     
             poly_line_d31d775d4fafc29c38706fb0b0a842e7.bindTooltip(
                 `<div>
-                     04.2020: Ohne Germanen-Beine, lassen die Römer keinen über den LIMES (Completed)
+                     04.2020: Ohne Germanen-Beine, lassen die R├Âmer keinen ├╝ber den LIMES (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -9716,7 +9716,7 @@
     
             poly_line_8a9423cea6645d9c273bd4bfd1963d54.bindTooltip(
                 `<div>
-                     04.2021: O³ - Orbitaler Oster Overnighter 1/2 (Completed)
+                     04.2021: O┬│ - Orbitaler Oster Overnighter 1/2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -9732,7 +9732,7 @@
     
             poly_line_6b111b02d1d139969284fc73877d2937.bindTooltip(
                 `<div>
-                     04.2021: O³ - Orbitaler Oster Overnighter 2/2 (Completed)
+                     04.2021: O┬│ - Orbitaler Oster Overnighter 2/2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10116,7 +10116,7 @@
     
             poly_line_65b442fad0116e5fdc04c41da8ea4fbc.bindTooltip(
                 `<div>
-                     03.2024: randonnée a/ Anton (DEUX) (Completed)
+                     03.2024: randonn├®e a/ Anton (DEUX) (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10132,7 +10132,7 @@
     
             poly_line_86c3df9ee1441e350092a534e8bdb927.bindTooltip(
                 `<div>
-                     03.2024: randonnée a/ Anton (TROIS) (Completed)
+                     03.2024: randonn├®e a/ Anton (TROIS) (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10148,7 +10148,7 @@
     
             poly_line_81dfc175635c0f665bf6668a7ccedc14.bindTooltip(
                 `<div>
-                     03.2024: randonnée a/ Anton (UN) (Completed)
+                     03.2024: randonn├®e a/ Anton (UN) (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10340,7 +10340,7 @@
     
             poly_line_0dce06a93e6d4bcc617cc86407dc2e8a.bindTooltip(
                 `<div>
-                     07.2020: Rennrad, Gravel, ¯\_(ツ)_/¯  ? (Completed)
+                     07.2020: Rennrad, Gravel, ┬»\_(Òâä)_/┬»┬á ? (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10356,7 +10356,7 @@
     
             poly_line_1eb1b3e6c577edf4c04a7f532ac2408f.bindTooltip(
                 `<div>
-                     02.2020: Rheinabwärts nach Heidelberg (Completed)
+                     02.2020: Rheinabw├ñrts nach Heidelberg (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10436,7 +10436,7 @@
     
             poly_line_a73b7204a47aebd333a79d4530c4bfbd.bindTooltip(
                 `<div>
-                     03.2020: Rheinhöhenweg und R3a + ColduHausen (Completed)
+                     03.2020: Rheinh├Âhenweg und R3a + ColduHausen (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10452,7 +10452,7 @@
     
             poly_line_ee718cd9bee96de348ba54d11ca54f11.bindTooltip(
                 `<div>
-                     03.2020: Rheinhöhenweg und R3a + ColduHausen (Completed)
+                     03.2020: Rheinh├Âhenweg und R3a + ColduHausen (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10468,7 +10468,7 @@
     
             poly_line_54d9e78c474593c4a82e7980ff594dd4.bindTooltip(
                 `<div>
-                     03.2025: Ri Sü n Fr un hoc (Completed)
+                     03.2025: Ri S├╝ n Fr un hoc (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10484,7 +10484,7 @@
     
             poly_line_c61668d4d9650cfbec7892f8f3b203fb.bindTooltip(
                 `<div>
-                     03.2025: Ri Sü re hoc Tur (Completed)
+                     03.2025: Ri S├╝ re hoc Tur (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10532,7 +10532,7 @@
     
             poly_line_221452c006f75e09839f2762cb29311b.bindTooltip(
                 `<div>
-                     07.2020: Route des Cretes & Basel - Bikepacking ⏱️3 (Completed)
+                     07.2020: Route des Cretes & Basel - Bikepacking ÔÅ▒´©Å3 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10564,7 +10564,7 @@
     
             poly_line_0b1928c233514c496053b31431c2b45a.bindTooltip(
                 `<div>
-                     08.2023: Rue du ballon d'alsace fermé. (Completed)
+                     08.2023: Rue du ballon d'alsace ferm├®. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10628,7 +10628,7 @@
     
             poly_line_69f4e1321c19c9281fe52bc4931ff226.bindTooltip(
                 `<div>
-                     05.2020: R⁴ [V.1.1] - to be continued (Completed)
+                     05.2020: RÔü┤ [V.1.1] - to be continued (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10644,7 +10644,7 @@
     
             poly_line_245ccc5ca42c46a97575dcd017c1f1ff.bindTooltip(
                 `<div>
-                     04.2020: R⁴ [V.1] - fast perfekte Gravelrunde (Completed)
+                     04.2020: RÔü┤ [V.1] - fast perfekte Gravelrunde (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10788,7 +10788,7 @@
     
             poly_line_9418ef3dfbd4ec9b82b4346dbfea6bbf.bindTooltip(
                 `<div>
-                     02.2022: Serra d’Artà. (Completed)
+                     02.2022: Serra dÔÇÖArt├á. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10804,7 +10804,7 @@
     
             poly_line_b0f05390e535b150a134fd3fb4655c0c.bindTooltip(
                 `<div>
-                     07.2023: Silvretta Hochalpenstraße. (Completed)
+                     07.2023: Silvretta Hochalpenstra├ƒe. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10900,7 +10900,7 @@
     
             poly_line_0afb8b5afbe5711d6c43cd2a72479871.bindTooltip(
                 `<div>
-                     10.2020: Sonnengruß 🌦️ (Completed)
+                     10.2020: Sonnengru├ƒ ­ƒîª´©Å (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -10980,7 +10980,7 @@
     
             poly_line_8d64e1d51b3f22f090665ca67371e1e5.bindTooltip(
                 `<div>
-                     05.2020: Stolperbiken für Hochbegabte. (Completed)
+                     05.2020: Stolperbiken f├╝r Hochbegabte. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11108,7 +11108,7 @@
     
             poly_line_0514f86501907cfc7a4069e0419b42ab.bindTooltip(
                 `<div>
-                     08.2025: TAK[1], 🙋‍♂️ Friitz? Ne! (Completed)
+                     08.2025: TAK[1], ­ƒÖïÔÇìÔÖé´©Å Friitz? Ne! (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11188,7 +11188,7 @@
     
             poly_line_f9eb59666d969a6c14e91f8784ac3625.bindTooltip(
                 `<div>
-                     08.2025: TAK[5],  r̶̶o̶̶l̶̶l̶̶i̶̶n̶̶g̶ HEAT. (Completed)
+                     08.2025: TAK[5],  r╠Â╠Âo╠Â╠Âl╠Â╠Âl╠Â╠Âi╠Â╠Ân╠Â╠Âg╠Â HEAT. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11204,7 +11204,7 @@
     
             poly_line_4f3c4fb929a7ef17b22829af2d1054e1.bindTooltip(
                 `<div>
-                     08.2025: TAK[6], schöne Ohře. (Completed)
+                     08.2025: TAK[6], sch├Âne Oh┼Öe. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11268,7 +11268,7 @@
     
             poly_line_061bbfb0f30c5e24944f5ba9236d013e.bindTooltip(
                 `<div>
-                     06.2021: Thüringer-Wald, ein Traum. Der Rest ist Klassik. (Completed)
+                     06.2021: Th├╝ringer-Wald, ein Traum. Der Rest ist Klassik. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11332,7 +11332,7 @@
     
             poly_line_3c5870789f53821a96ebc506d69d1388.bindTooltip(
                 `<div>
-                     07.2020: TMV & TdF - Bikepacking ⏱️2 (Completed)
+                     07.2020: TMV & TdF - Bikepacking ÔÅ▒´©Å2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11348,7 +11348,7 @@
     
             poly_line_cd92c69cd8ad78024aa0e16dd9270116.bindTooltip(
                 `<div>
-                     07.2022: Tour de France Femmes: Arrivée (Completed)
+                     07.2022: Tour de France Femmes: Arriv├®e (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11364,7 +11364,7 @@
     
             poly_line_68d27c4ed539c4b506404c40bfc21c51.bindTooltip(
                 `<div>
-                     07.2022: Tour de France Femmes: Départ. (Completed)
+                     07.2022: Tour de France Femmes: D├®part. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11396,7 +11396,7 @@
     
             poly_line_140abeb3030c3232ee2ab998970701f2.bindTooltip(
                 `<div>
-                     08.2022: Tour de France Femmes: À la maison. (Completed)
+                     08.2022: Tour de France Femmes: ├Ç la maison. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11540,7 +11540,7 @@
     
             poly_line_a32822c8715399c4d15b4e0ef6ce2f40.bindTooltip(
                 `<div>
-                     03.2021: Urlaub März 2021 (Completed)
+                     03.2021: Urlaub M├ñrz 2021 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11556,7 +11556,7 @@
     
             poly_line_18d75aecc30827c926c3d9b3522ae5d0.bindTooltip(
                 `<div>
-                     03.2021: Urlaub März 2021 (Completed)
+                     03.2021: Urlaub M├ñrz 2021 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11572,7 +11572,7 @@
     
             poly_line_350f10815057ef81630df2daa33f926c.bindTooltip(
                 `<div>
-                     03.2021: Urlaub März 2021 (Completed)
+                     03.2021: Urlaub M├ñrz 2021 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11588,7 +11588,7 @@
     
             poly_line_fda9a49b3ed259ab3e4e0d36f3a7cf9c.bindTooltip(
                 `<div>
-                     03.2021: Urlaub März 2021 (Completed)
+                     03.2021: Urlaub M├ñrz 2021 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11604,7 +11604,7 @@
     
             poly_line_ddb6743410b01802c79f0ac536e3b369.bindTooltip(
                 `<div>
-                     03.2021: Urlaub März 2021 (Completed)
+                     03.2021: Urlaub M├ñrz 2021 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11636,7 +11636,7 @@
     
             poly_line_3455305530a5e09b63c1dbfba9427dcc.bindTooltip(
                 `<div>
-                     08.2021: Vier Täler Tour X Zwei. (Completed)
+                     08.2021: Vier T├ñler Tour X Zwei. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11652,7 +11652,7 @@
     
             poly_line_a9317e3a593619898d112da99cd1c6b4.bindTooltip(
                 `<div>
-                     07.2020: Vinschgau - Bikepacking ⏱️5 (Completed)
+                     07.2020: Vinschgau - Bikepacking ÔÅ▒´©Å5 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11668,7 +11668,7 @@
     
             poly_line_b635c4f76752911544e671685a02a053.bindTooltip(
                 `<div>
-                     07.2020: Vogesentraum - Bikepacking ⏱️2.1 (Completed)
+                     07.2020: Vogesentraum - Bikepacking ÔÅ▒´©Å2.1 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11860,7 +11860,7 @@
     
             poly_line_e562017ca4104b4a946c7e1d5af0e258.bindTooltip(
                 `<div>
-                     04.2023: Was·ser·rat·te (Completed)
+                     04.2023: Was┬Àser┬Àrat┬Àte (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11956,7 +11956,7 @@
     
             poly_line_a4b4acd0b1944be999971b275c909d10.bindTooltip(
                 `<div>
-                     06.2021: WH³ 21 - Die Bergetappen (Completed)
+                     06.2021: WH┬│ 21 - Die Bergetappen (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11972,7 +11972,7 @@
     
             poly_line_1344b4111813fd6308b0d93dd71729e2.bindTooltip(
                 `<div>
-                     06.2021: WH³ 21 - Felder und Wiesen (Completed)
+                     06.2021: WH┬│ 21 - Felder und Wiesen (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -11988,7 +11988,7 @@
     
             poly_line_abfb942aaf161d6ebdcde8dacc5b3902.bindTooltip(
                 `<div>
-                     06.2021: WH³ 21 - Gruppensprint (Completed)
+                     06.2021: WH┬│ 21 - Gruppensprint (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -12068,7 +12068,7 @@
     
             poly_line_e356d2a1683fda835eabf12254e4d520.bindTooltip(
                 `<div>
-                     11.2020: Wispertal für mich alleine. (Completed)
+                     11.2020: Wispertal f├╝r mich alleine. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -12084,7 +12084,7 @@
     
             poly_line_e1ec4d6e8989f7e92ae292196eeb0b3f.bindTooltip(
                 `<div>
-                     12.2020: Wohlfühl-Wetter-Runde (Completed)
+                     12.2020: Wohlf├╝hl-Wetter-Runde (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -12228,7 +12228,7 @@
     
             poly_line_14ed20cf1ea6cc70eee7f1038f0ab701.bindTooltip(
                 `<div>
-                     10.2022: Über die Höhe. (Completed)
+                     10.2022: ├£ber die H├Âhe. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -12244,7 +12244,7 @@
     
             poly_line_b643b212ac0f77bf99a51cfc431fedf1.bindTooltip(
                 `<div>
-                     08.2023: ˈaltəˌt(y)o͞od ˈɹitʃt 2023. (Completed)
+                     08.2023: ╦êalt╔Ö╦ît(y)o═×od ╦ê╔╣it╩ât 2023. (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -13220,7 +13220,7 @@
     
             poly_line_c5b368acc0cb9843c071b112525ce482.bindTooltip(
                 `<div>
-                     04.2026: Traversée des Vosges IIII (Completed)
+                     04.2026: Travers├®e des Vosges IIII (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -13236,7 +13236,7 @@
     
             poly_line_d5bd5654dc0edca9bb8a225d2ae20c27.bindTooltip(
                 `<div>
-                     04.2026: Traversée des Vosges III (Completed)
+                     04.2026: Travers├®e des Vosges III (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -13252,7 +13252,7 @@
     
             poly_line_6de19be21fed29f7afa1a0b232537c0b.bindTooltip(
                 `<div>
-                     04.2026: Traversée des Vosges II (Completed)
+                     04.2026: Travers├®e des Vosges II (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -13268,7 +13268,7 @@
     
             poly_line_554dda68fa410cf22465e2d08f121339.bindTooltip(
                 `<div>
-                     04.2026: Traversée des Vosges I (Completed)
+                     04.2026: Travers├®e des Vosges I (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -13348,7 +13348,7 @@
     
             poly_line_dfe3dd4035d272d0b8d4a54ef584297c.bindTooltip(
                 `<div>
-                     03.2026: březen 3 (Completed)
+                     03.2026: b┼Öezen 3 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -13364,7 +13364,7 @@
     
             poly_line_b657b0d783ad83aca49effe82c26b1c8.bindTooltip(
                 `<div>
-                     03.2026: březen 2 (Completed)
+                     03.2026: b┼Öezen 2 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -13380,7 +13380,7 @@
     
             poly_line_af053ec975f8172a735204411df49a8c.bindTooltip(
                 `<div>
-                     03.2026: březen 1 (Completed)
+                     03.2026: b┼Öezen 1 (Completed)
                  </div>`,
                 {
   "sticky": true,
@@ -13509,7 +13509,7 @@
                     },
                     body: JSON.stringify({
                         sessionId: '629707',
-                        runId: 'post-fix',
+                        runId: 'post-fix-2',
                         hypothesisId: hypothesisId,
                         location: 'map_part_heat.html:paths',
                         message: message,
@@ -13536,4 +13536,28 @@
                         strokeOpacity: cs.strokeOpacity,
                         mixBlendMode: cs.mixBlendMode,
                         filter: cs.filter
-   
+                    });
+                }
+                sendHeatLog('D', 'path style sample', {
+                    pathCount: paths.length,
+                    zoom: heatMap.getZoom(),
+                    zoomClass: zoomClass,
+                    baseClass: baseClass,
+                    samples: samples
+                });
+            }
+
+            heatMap.whenReady(function () {
+                setTimeout(samplePaths, 800);
+                heatMap.on('baselayerchange', function () {
+                    setTimeout(samplePaths, 300);
+                });
+                heatMap.on('zoomend', function () {
+                    setTimeout(samplePaths, 200);
+                });
+            });
+            // #endregion
+        })();
+    </script>
+
+</html>

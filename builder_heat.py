@@ -25,24 +25,24 @@ base.LINIEN_OPACITY = 0.25
 
 MULTIPLY_STYLE = """
     <style id="ride-to-map-heat-style">
-        /* Light map: multiply for heat stacking. Dark map: screen so lines stay orange. */
+        /* No multiply: on mobile it turns orange tracks black over dark tiles. */
         body.heat-base-light .leaflet-overlay-pane svg path {
-            mix-blend-mode: multiply;
+            mix-blend-mode: normal;
         }
         body.heat-base-dark .leaflet-overlay-pane svg path {
             mix-blend-mode: screen;
         }
         body.heat-zoom-far .leaflet-overlay-pane svg path {
-            stroke-width: 1.2px !important;
-            stroke-opacity: 0.12 !important;
+            stroke-width: 1.4px !important;
+            stroke-opacity: 0.22 !important;
         }
         body.heat-zoom-medium .leaflet-overlay-pane svg path {
-            stroke-width: 1.6px !important;
-            stroke-opacity: 0.2 !important;
+            stroke-width: 1.8px !important;
+            stroke-opacity: 0.32 !important;
         }
         body.heat-zoom-near .leaflet-overlay-pane svg path {
-            stroke-width: 2px !important;
-            stroke-opacity: 0.3 !important;
+            stroke-width: 2.2px !important;
+            stroke-opacity: 0.42 !important;
         }
     </style>
 """
